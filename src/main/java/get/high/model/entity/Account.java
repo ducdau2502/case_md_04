@@ -1,12 +1,7 @@
 package get.high.model.entity;
 
-
-import lombok.Data;
-import org.springframework.lang.NonNull;
-import org.springframework.validation.annotation.Validated;
-
 import javax.persistence.*;
-import java.util.stream.Stream;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "account")
@@ -17,10 +12,10 @@ public class Account {
     private Long id;
 
 
-    @NonNull
+    @NotNull
     private String username;
 
-    @NonNull
+    @NotNull
     private String password;
 
 
@@ -35,21 +30,19 @@ public class Account {
         this.id = id;
     }
 
-    @NonNull
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(@NonNull String username) {
+    public void setUsername(String username) {
         this.username = username;
     }
 
-    @NonNull
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(@NonNull String password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 }

@@ -87,4 +87,12 @@ public class UserInfor {
     public void setAccount(Account account) {
         this.account = account;
     }
+
+    public Set<UserInfor> getUserInfors() {
+        return userInfors;
+    }
+
+    public void setUserInfors(Set<UserInfor> userInfors) {
+        this.userInfors = userInfors;
+    }
 }

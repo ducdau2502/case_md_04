@@ -15,9 +15,9 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String contents;
-    private String urlImg;
-    private LocalDate dateCreate;
+    private String content;
+    private String imgUrl;
+    private LocalDate dateCreated;
     private Integer status;
 
 
@@ -26,7 +26,7 @@ public class Post {
 
     @ManyToOne
     @JoinColumn(name = "userinfor_id")
-    private UserInfor userInformation;
+    private UserInfor userInfor;
 
     @ManyToOne
     @JoinColumn(name = "groups_id")
@@ -47,28 +47,28 @@ public class Post {
         this.id = id;
     }
 
-    public String getContents() {
-        return contents;
+    public String getContent() {
+        return content;
     }
 
-    public void setContents(String contents) {
-        this.contents = contents;
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getUrlImg() {
-        return urlImg;
+    public String getImgUrl() {
+        return imgUrl;
     }
 
-    public void setUrlImg(String urlImg) {
-        this.urlImg = urlImg;
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
-    public LocalDate getDateCreate() {
-        return dateCreate;
+    public LocalDate getDateCreated() {
+        return dateCreated;
     }
 
-    public void setDateCreate(LocalDate dateCreate) {
-        this.dateCreate = dateCreate;
+    public void setDateCreated(LocalDate dateCreated) {
+        this.dateCreated = dateCreated;
     }
 
     public Integer getStatus() {
@@ -87,11 +87,27 @@ public class Post {
         this.imgFile = imgFile;
     }
 
-    public UserInfor getUserInformation() {
-        return userInformation;
+    public UserInfor getUserInfor() {
+        return userInfor;
     }
 
-    public void setUserInformation(UserInfor userInformation) {
-        this.userInformation = userInformation;
+    public void setUserInfor(UserInfor userInfor) {
+        this.userInfor = userInfor;
+    }
+
+    public Groups getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Groups groups) {
+        this.groups = groups;
+    }
+
+    public Set<UserInfor> getUserInfors() {
+        return userInfors;
+    }
+
+    public void setUserInfors(Set<UserInfor> userInfors) {
+        this.userInfors = userInfors;
     }
 }
