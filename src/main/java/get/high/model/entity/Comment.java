@@ -14,28 +14,12 @@ public class Comment {
     private String content;
 
     @ManyToOne
-    @JoinColumn(name = "userinfor_id")
-    private UserInfor userInfor;
+    @JoinColumn(name = "userinfo_id")
+    private UserInfo userInfo;
 
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
-
-
-    @ManyToMany
-    @JoinTable(name = "like_comment",
-            joinColumns = @JoinColumn(name = "comment_id"),
-            inverseJoinColumns = @JoinColumn(name = "userinfor_id"))
-    private Set<UserInfor> userInfors;
-
-
-    public Set<UserInfor> getUserInfors() {
-        return userInfors;
-    }
-
-    public void setUserInfors(Set<UserInfor> userInfors) {
-        this.userInfors = userInfors;
-    }
 
     public Comment() {
     }
@@ -56,12 +40,12 @@ public class Comment {
         this.content = content;
     }
 
-    public UserInfor getUserInfor() {
-        return userInfor;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-    public void setUserInfor(UserInfor userInfor) {
-        this.userInfor = userInfor;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     public Post getPost() {
@@ -71,5 +55,4 @@ public class Comment {
     public void setPost(Post post) {
         this.post = post;
     }
-
 }

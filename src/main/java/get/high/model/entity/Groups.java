@@ -17,8 +17,8 @@ public class Groups {
     @ManyToMany
     @JoinTable(name = "members",
             joinColumns = @JoinColumn(name = "groups_id"),
-            inverseJoinColumns = @JoinColumn(name = "userinfor_id"))
-    private Set<UserInfor> userInfors;
+            inverseJoinColumns = @JoinColumn(name = "userinfo_id"))
+    private Set<UserInfo> userInfos;
 
     public Groups() {
     }
@@ -39,11 +39,11 @@ public class Groups {
         this.name = name;
     }
 
-    public Set<UserInfor> getUserInfors() {
-        return userInfors;
+    public Set<UserInfo> getUserInfos() {
+        return userInfos;
     }
 
-    public void setUserInfors(Set<UserInfor> userInfors) {
-        this.userInfors = userInfors;
+    public void setUserInfos(Set<UserInfo> userInfos) {
+        this.userInfos = userInfos;
     }
 }

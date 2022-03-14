@@ -25,18 +25,12 @@ public class Post {
     private MultipartFile imgFile;
 
     @ManyToOne
-    @JoinColumn(name = "userinfor_id")
-    private UserInfor userInfor;
+    @JoinColumn(name = "userinfo_id")
+    private UserInfo userInfo;
 
     @ManyToOne
     @JoinColumn(name = "groups_id")
     private Groups groups;
-
-    @ManyToMany
-    @JoinTable(name = "like_post",
-            joinColumns = @JoinColumn(name = "post_id"),
-            inverseJoinColumns = @JoinColumn(name = "userinfor_id"))
-    private Set<UserInfor> userInfors;
 
     public Post() {
     }
@@ -89,12 +83,12 @@ public class Post {
         this.imgFile = imgFile;
     }
 
-    public UserInfor getUserInfor() {
-        return userInfor;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-    public void setUserInfor(UserInfor userInfor) {
-        this.userInfor = userInfor;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     public Groups getGroups() {
@@ -103,13 +97,5 @@ public class Post {
 
     public void setGroups(Groups groups) {
         this.groups = groups;
-    }
-
-    public Set<UserInfor> getUserInfors() {
-        return userInfors;
-    }
-
-    public void setUserInfors(Set<UserInfor> userInfors) {
-        this.userInfors = userInfors;
     }
 }

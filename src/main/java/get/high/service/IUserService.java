@@ -1,6 +1,6 @@
 package get.high.service;
 
-import get.high.model.entity.UserInfor;
+import get.high.model.entity.UserInfo;
 
-public interface IUserService extends IGeneralService<UserInfor> {
+public interface IUserService extends IGeneralService<UserInfo> {
 }

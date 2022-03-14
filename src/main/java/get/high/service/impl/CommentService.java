@@ -32,4 +32,9 @@ public class CommentService implements ICommentService {
     public void remove(Long id) {
         iCommentRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Comment> findAllByPost_Id(Long id) {
+        return iCommentRepository.findAllByPost_Id(id);
+    }
 }
