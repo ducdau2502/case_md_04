@@ -4,18 +4,20 @@ package get.high.model.entity;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
-@Table(name = "userinfor")
-public class UserInfor {
+@Table(name = "userInfo")
+public class UserInfo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String email;
+
     private String fullName;
     private String phoneNumber;
     private LocalDate birthday;
@@ -29,14 +31,7 @@ public class UserInfor {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToMany
-    @JoinTable(name = "listFriend",
-            joinColumns = @JoinColumn(name = "userinfor_id_O1"),
-            inverseJoinColumns = @JoinColumn(name = "userinfor_id_02"))
-    private Set<UserInfor> userInfors;
-
-
-    public UserInfor() {
+    public UserInfo() {
     }
 
     public Long getId() {
@@ -45,14 +40,6 @@ public class UserInfor {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getFullName() {
@@ -87,22 +74,6 @@ public class UserInfor {
         this.address = address;
     }
 
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
-    public Set<UserInfor> getUserInfors() {
-        return userInfors;
-    }
-
-    public void setUserInfors(Set<UserInfor> userInfors) {
-        this.userInfors = userInfors;
-    }
-
     public String getAvatarUrl() {
         return avatarUrl;
     }
@@ -117,5 +88,13 @@ public class UserInfor {
 
     public void setAvatarFile(MultipartFile avatarFile) {
         this.avatarFile = avatarFile;
+    }
+
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
     }
 }

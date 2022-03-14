@@ -1,6 +1,6 @@
 package get.high.service.impl;
 
-import get.high.model.entity.UserInfor;
+import get.high.model.entity.UserInfo;
 import get.high.repository.IUserRepository;
 import get.high.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,18 +14,18 @@ public class UserService implements IUserService {
     private IUserRepository iUserRepository;
 
     @Override
-    public Iterable<UserInfor> findAll() {
+    public Iterable<UserInfo> findAll() {
         return iUserRepository.findAll();
     }
 
     @Override
-    public Optional<UserInfor> findById(Long id) {
+    public Optional<UserInfo> findById(Long id) {
         return iUserRepository.findById(id);
     }
 
     @Override
-    public UserInfor save(UserInfor userInfor) {
-        return iUserRepository.save(userInfor);
+    public UserInfo save(UserInfo userInfo) {
+        return iUserRepository.save(userInfo);
     }
 
     @Override
