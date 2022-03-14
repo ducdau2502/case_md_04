@@ -1,9 +1,9 @@
 package get.high.repository;
 
-import get.high.model.entity.Groups;
+import get.high.model.entity.UserInfor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface IGroupsRepository extends JpaRepository<Groups, Long> {
+public interface IUserRepository extends JpaRepository<UserInfor, Long> {
 }

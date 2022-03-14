@@ -1,6 +1,8 @@
 package get.high.model.entity;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Set;
@@ -18,7 +20,10 @@ public class UserInfor {
     private String phoneNumber;
     private LocalDate birthday;
     private String address;
+    private String avatarUrl;
 
+    @Transient
+    private MultipartFile avatarFile;
 
     @OneToOne
     @JoinColumn(name = "account_id")
@@ -96,5 +101,21 @@ public class UserInfor {
 
     public void setUserInfors(Set<UserInfor> userInfors) {
         this.userInfors = userInfors;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public MultipartFile getAvatarFile() {
+        return avatarFile;
+    }
+
+    public void setAvatarFile(MultipartFile avatarFile) {
+        this.avatarFile = avatarFile;
     }
 }
