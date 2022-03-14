@@ -3,6 +3,7 @@ package get.high.service.impl;
 import get.high.model.entity.Comment;
 import get.high.repository.ICommentRepository;
 import get.high.service.ICommentService;
+import get.high.service.ILikeCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,9 @@ import java.util.Optional;
 public class CommentService implements ICommentService {
     @Autowired
     private ICommentRepository iCommentRepository;
+
+    @Autowired
+    private ILikeCommentService iLikeCommentService;
 
     @Override
     public Iterable<Comment> findAll() {
@@ -30,6 +34,7 @@ public class CommentService implements ICommentService {
 
     @Override
     public void remove(Long id) {
+        iLikeCommentService.deleteAllByComment_Id(id);
         iCommentRepository.deleteById(id);
     }
 
