@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/likeComment")
+@RequestMapping("/like-comment")
 public class LikeCommentController {
 
     @Autowired

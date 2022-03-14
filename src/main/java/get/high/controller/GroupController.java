@@ -23,6 +23,7 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
+@CrossOrigin("*")
 @RequestMapping("/group")
 public class GroupController {
     @Value("${file-upload}")
