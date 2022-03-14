@@ -37,4 +37,19 @@ public class AccountService implements IAccountService {
     public Iterable<Account> findAllByUsername(String username) {
         return iAccountRepository.findAllByUsernameContaining(username);
     }
+
+    @Override
+    public Optional<Account> findByUsername(String name) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Boolean existsByUsername(String name) {
+        return null;
+    }
+
+    @Override
+    public Boolean existsByEmail(String name) {
+        return null;
+    }
 }

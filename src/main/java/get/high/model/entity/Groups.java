@@ -13,13 +13,6 @@ public class Groups {
     private Long id;
     private String name;
 
-
-    @ManyToMany
-    @JoinTable(name = "members",
-            joinColumns = @JoinColumn(name = "groups_id"),
-            inverseJoinColumns = @JoinColumn(name = "userinfo_id"))
-    private Set<UserInfo> userInfos;
-
     public Groups() {
     }
 
@@ -37,13 +30,5 @@ public class Groups {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Set<UserInfo> getUserInfos() {
-        return userInfos;
-    }
-
-    public void setUserInfos(Set<UserInfo> userInfos) {
-        this.userInfos = userInfos;
     }
 }
