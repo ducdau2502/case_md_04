@@ -31,4 +31,19 @@ public class LikePostService implements ILikePostService {
     public void remove(Long id) {
         iLikePostRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<LikePost> findByPost_IdAndUserInfo_Id(Long post_id, Long userinfo_id) {
+        return iLikePostRepository.findByPost_IdAndUserInfo_Id(post_id, userinfo_id);
+    }
+
+    @Override
+    public void deleteAllByPost_Id(Long post_id) {
+        iLikePostRepository.deleteAllByPost_Id(post_id);
+    }
+
+    @Override
+    public Long countLikeCommentByPost_Id(Long post_id) {
+        return iLikePostRepository.countLikeCommentByPost_Id(post_id);
+    }
 }
