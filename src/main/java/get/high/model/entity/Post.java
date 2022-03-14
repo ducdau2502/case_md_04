@@ -33,7 +33,9 @@ public class Post {
     private Groups groups;
 
     @ManyToMany
-    @JoinTable(name = "like_post", joinColumns = @JoinColumn(name = "post_id"), inverseJoinColumns = @JoinColumn(name = "userinfor_id"))
+    @JoinTable(name = "like_post",
+            joinColumns = @JoinColumn(name = "post_id"),
+            inverseJoinColumns = @JoinColumn(name = "userinfor_id"))
     private Set<UserInfor> userInfors;
 
     public Post() {

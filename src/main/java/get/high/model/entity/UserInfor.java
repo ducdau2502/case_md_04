@@ -1,6 +1,8 @@
 package get.high.model.entity;
 
 
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -20,14 +22,19 @@ public class UserInfor {
     private String phoneNumber;
     private LocalDate birthday;
     private String address;
+    private String avatarUrl;
 
+    @Transient
+    private MultipartFile avatarFile;
 
     @OneToOne
     @JoinColumn(name = "account_id")
     private Account account;
 
     @ManyToMany
-    @JoinTable(name = "listFriend", joinColumns = @JoinColumn(name = "userinfor_id_O1"), inverseJoinColumns = @JoinColumn(name = "userinfor_id_02"))
+    @JoinTable(name = "listFriend",
+            joinColumns = @JoinColumn(name = "userinfor_id_O1"),
+            inverseJoinColumns = @JoinColumn(name = "userinfor_id_02"))
     private Set<UserInfor> userInfors;
 
 
@@ -88,5 +95,21 @@ public class UserInfor {
 
     public void setUserInfors(Set<UserInfor> userInfors) {
         this.userInfors = userInfors;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
+    public MultipartFile getAvatarFile() {
+        return avatarFile;
+    }
+
+    public void setAvatarFile(MultipartFile avatarFile) {
+        this.avatarFile = avatarFile;
     }
 }
