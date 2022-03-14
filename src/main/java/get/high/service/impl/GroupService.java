@@ -7,6 +7,8 @@ import get.high.service.IGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class GroupService implements IGroupService {
     @Autowired
@@ -18,7 +20,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public UserInfo findById(Long id) {
+    public Optional<Groups> findById(Long id) {
         return iGroupRepository.findById(id);
     }
 

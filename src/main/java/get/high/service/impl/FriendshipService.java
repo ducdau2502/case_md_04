@@ -7,6 +7,8 @@ import get.high.service.IFriendshipService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class FriendshipService implements IFriendshipService {
     @Autowired
@@ -18,7 +20,7 @@ public class FriendshipService implements IFriendshipService {
     }
 
     @Override
-    public UserInfo findById(Long id) {
+    public Optional<Friendship> findById(Long id) {
         return iFriendshipRepository.findById(id);
     }
 

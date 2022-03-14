@@ -8,6 +8,8 @@ import get.high.service.ILikeCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CommentService implements ICommentService {
     @Autowired
@@ -22,7 +24,7 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public UserInfo findById(Long id) {
+    public Optional<Comment> findById(Long id) {
         return iCommentRepository.findById(id);
     }
 

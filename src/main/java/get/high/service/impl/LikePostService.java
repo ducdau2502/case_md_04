@@ -7,6 +7,8 @@ import get.high.service.ILikePostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class LikePostService implements ILikePostService {
     @Autowired
@@ -18,7 +20,7 @@ public class LikePostService implements ILikePostService {
     }
 
     @Override
-    public UserInfo findById(Long id) {
+    public Optional<LikePost> findById(Long id) {
         return iLikePostRepository.findById(id);
     }
 

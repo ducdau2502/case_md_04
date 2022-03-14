@@ -10,6 +10,8 @@ import get.high.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class PostService implements IPostService {
     @Autowired
@@ -27,7 +29,7 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public UserInfo findById(Long id) {
+    public Optional<Post> findById(Long id) {
         return iPostRepository.findById(id);
     }
 
