@@ -1,11 +1,11 @@
 package get.high.service;
 
-import java.util.Optional;
+import get.high.model.entity.UserInfo;
 
 public interface IGeneralService<T> {
     Iterable<T> findAll();
 
-    Optional<T> findById(Long id);
+    UserInfo findById(Long id);
 
     T save(T t);
 

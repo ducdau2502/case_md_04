@@ -1,12 +1,11 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Post;
+import get.high.model.entity.UserInfo;
 import get.high.repository.IPostRepository;
 import get.high.service.IPostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class PostService implements IPostService {
@@ -19,7 +18,7 @@ public class PostService implements IPostService {
     }
 
     @Override
-    public Optional<Post> findById(Long id) {
+    public UserInfo findById(Long id) {
         return iPostRepository.findById(id);
     }
 

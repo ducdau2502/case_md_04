@@ -1,12 +1,11 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Groups;
+import get.high.model.entity.UserInfo;
 import get.high.repository.IGroupRepository;
 import get.high.service.IGroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class GroupService implements IGroupService {
@@ -19,7 +18,7 @@ public class GroupService implements IGroupService {
     }
 
     @Override
-    public Optional<Groups> findById(Long id) {
+    public UserInfo findById(Long id) {
         return iGroupRepository.findById(id);
     }
 

@@ -1,12 +1,11 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Comment;
+import get.high.model.entity.UserInfo;
 import get.high.repository.ICommentRepository;
 import get.high.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class CommentService implements ICommentService {
@@ -19,7 +18,7 @@ public class CommentService implements ICommentService {
     }
 
     @Override
-    public Optional<Comment> findById(Long id) {
+    public UserInfo findById(Long id) {
         return iCommentRepository.findById(id);
     }
 

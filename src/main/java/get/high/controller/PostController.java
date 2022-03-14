@@ -18,7 +18,7 @@ public class PostController {
     @Autowired
     private IPostService postService;
 
-    @GetMapping("search-hasTag")
+    @GetMapping("/search-hasTag")
     public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> hasTag) {
         Iterable<Post> posts = postService.findAllByHasTag(hasTag.get());
         if (!posts.iterator().hasNext()) {

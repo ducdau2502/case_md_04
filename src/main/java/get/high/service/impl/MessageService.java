@@ -1,12 +1,11 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Message;
+import get.high.model.entity.UserInfo;
 import get.high.repository.IMessageRepository;
 import get.high.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class MessageService implements IMessageService {
@@ -19,7 +18,7 @@ public class MessageService implements IMessageService {
     }
 
     @Override
-    public Optional<Message> findById(Long id) {
+    public UserInfo findById(Long id) {
         return iMessageRepository.findById(id);
     }
 

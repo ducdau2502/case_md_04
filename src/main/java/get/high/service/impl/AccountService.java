@@ -1,6 +1,7 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Account;
+import get.high.model.entity.UserInfo;
 import get.high.repository.IAccountRepository;
 import get.high.service.IAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class AccountService implements IAccountService {
     }
 
     @Override
-    public Optional<Account> findById(Long id) {
+    public UserInfo findById(Long id) {
         return iAccountRepository.findById(id);
     }
 

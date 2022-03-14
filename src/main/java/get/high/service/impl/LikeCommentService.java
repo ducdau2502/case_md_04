@@ -1,12 +1,11 @@
 package get.high.service.impl;
 
 import get.high.model.entity.LikeComment;
+import get.high.model.entity.UserInfo;
 import get.high.repository.ILikeCommentRepository;
 import get.high.service.ILikeCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class LikeCommentService implements ILikeCommentService {
@@ -19,7 +18,7 @@ public class LikeCommentService implements ILikeCommentService {
     }
 
     @Override
-    public Optional<LikeComment> findById(Long id) {
+    public UserInfo findById(Long id) {
         return iLikeCommentRepository.findById(id);
     }
 
