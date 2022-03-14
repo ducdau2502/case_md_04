@@ -23,7 +23,9 @@ public class Comment {
 
 
     @ManyToMany
-    @JoinTable(name = "like_comment", joinColumns = @JoinColumn(name = "comment_id"), inverseJoinColumns = @JoinColumn(name = "userinfor_id"))
+    @JoinTable(name = "like_comment",
+            joinColumns = @JoinColumn(name = "comment_id"),
+            inverseJoinColumns = @JoinColumn(name = "userinfor_id"))
     private Set<UserInfor> userInfors;
 
 

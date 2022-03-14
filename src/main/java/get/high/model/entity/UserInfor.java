@@ -30,7 +30,9 @@ public class UserInfor {
     private Account account;
 
     @ManyToMany
-    @JoinTable(name = "listFriend", joinColumns = @JoinColumn(name = "userinfor_id_O1"), inverseJoinColumns = @JoinColumn(name = "userinfor_id_02"))
+    @JoinTable(name = "listFriend",
+            joinColumns = @JoinColumn(name = "userinfor_id_O1"),
+            inverseJoinColumns = @JoinColumn(name = "userinfor_id_02"))
     private Set<UserInfor> userInfors;
 
 
