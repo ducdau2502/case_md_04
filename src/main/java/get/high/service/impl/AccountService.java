@@ -32,4 +32,9 @@ public class AccountService implements IAccountService {
     public void remove(Long id) {
         iAccountRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Account> findAllByUsername(String username) {
+        return iAccountRepository.findAllByUsernameContaining(username);
+    }
 }

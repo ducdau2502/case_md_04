@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IAccountRepository extends JpaRepository<Account, Long> {
+    Iterable<Account> findAllByUsernameContaining(String username);
 }

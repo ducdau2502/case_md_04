@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IPostRepository extends JpaRepository<Post, Long> {
+    Iterable<Post> findAllByContentContaining(String content);
 }

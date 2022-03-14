@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IGroupRepository extends JpaRepository<Groups, Long> {
+    Iterable<Groups> findAllByNameContaining(String name);
 }

@@ -32,4 +32,9 @@ public class GroupService implements IGroupService {
     public void remove(Long id) {
         iGroupRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Groups> findAllByName(String name) {
+        return iGroupRepository.findAllByNameContaining(name);
+    }
 }
