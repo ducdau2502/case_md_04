@@ -1,9 +1,51 @@
 package get.high.controller;
 
+import get.high.model.entity.Comment;
+import get.high.model.entity.LikeComment;
+import get.high.model.entity.UserInfo;
+import get.high.service.ICommentService;
+import get.high.service.ILikeCommentService;
+import get.high.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @Controller
+@CrossOrigin("*")
 @RequestMapping("/likeComment")
 public class LikeCommentController {
+
+    @Autowired
+    private ILikeCommentService likeCommentService;
+
+    @Autowired
+    private ICommentService commentService;
+
+    @Autowired
+    private IUserService userService;
+
+    @PostMapping("/{comment_id}/{userinfo_id}")
+    public ResponseEntity<LikeComment> checkLikeComment(@PathVariable("comment_id") long comment_id, @PathVariable("userinfo_id") long userinfo_id) {
+        Optional<LikeComment> likeCommentOptional = likeCommentService.findByComment_IdAndUserInfo_Id(comment_id, userinfo_id);
+        if (!likeCommentOptional.isPresent()) {
+            UserInfo userInfo = userService.findById(userinfo_id).get();
+            Comment comment = commentService.findById(comment_id).get();
+            LikeComment likeComment = new LikeComment(comment, userInfo);
+            likeCommentService.save(likeComment);
+        } else {
+            likeCommentService.remove(likeCommentOptional.get().getId());
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Long> countLikeCommentByComment_Id(@PathVariable("id") long id) {
+        Long countLikeCommentByComment_Id = likeCommentService.countLikeCommentByComment_Id(id);
+        return new ResponseEntity<>(countLikeCommentByComment_Id, HttpStatus.OK);
+    }
+
 }

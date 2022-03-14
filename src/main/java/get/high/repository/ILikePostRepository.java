@@ -4,6 +4,13 @@ import get.high.model.entity.LikePost;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface ILikePostRepository extends JpaRepository<LikePost, Long> {
+    Optional<LikePost> findByPost_IdAndUserInfo_Id(Long post_id, Long userinfo_id);
+
+    Long countLikeCommentByPost_Id(Long post_id);
+
+    void deleteAllByPost_Id(Long post_id);
 }

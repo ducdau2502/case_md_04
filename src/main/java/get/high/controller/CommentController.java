@@ -2,6 +2,7 @@ package get.high.controller;
 
 import get.high.model.entity.Comment;
 import get.high.service.ICommentService;
+import get.high.service.ILikeCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,14 @@ public class CommentController {
     @Autowired
     private ICommentService commentService;
 
+    @Autowired
+    private ILikeCommentService likeCommentService;
+
     @GetMapping("/{id}")
     public ResponseEntity<Iterable<Comment>> showAllByPost(@PathVariable("id") Long id) {
-        List<Comment> comments = (List<Comment>) commentService.findAllByPost_Id(id);
+        Iterable<Comment> comments = commentService.findAllByPost_Id(id);
 
-        if (comments.isEmpty()) {
+        if (!comments.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(comments, HttpStatus.OK);
