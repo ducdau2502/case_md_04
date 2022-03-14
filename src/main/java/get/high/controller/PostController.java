@@ -22,7 +22,7 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> hasTag) {
         Iterable<Post> posts = postService.findAllByHasTag(hasTag.get());
         if (!posts.iterator().hasNext()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }

@@ -22,7 +22,7 @@ public class AccountController {
     public ResponseEntity<Iterable<Account>> findAllByUsername(@RequestParam Optional<String> search) {
         Iterable<Account> accounts = accountService.findAllByUsername(search.get());
         if (!accounts.iterator().hasNext()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(accounts, HttpStatus.OK);
     }
