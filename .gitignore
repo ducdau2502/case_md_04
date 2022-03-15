@@ -36,5 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 
-resources/application.properties
-build.gradle
+*.env

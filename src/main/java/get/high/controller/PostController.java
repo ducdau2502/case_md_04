@@ -37,20 +37,20 @@ public class PostController {
     @Autowired
     private IUserService userService;
 
-    @GetMapping("/search-hasTag")
-    public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> hasTag) {
-        Iterable<Post> posts = postService.findAllByHasTag(hasTag.get());
-        if (!posts.iterator().hasNext()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(posts, HttpStatus.OK);
-    }
-
     @GetMapping
     public ResponseEntity<Iterable<Post>> findAll() {
         Iterable<Post> posts = postService.findAll();
         if (!posts.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    @GetMapping("/search-hasTag")
+    public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> hasTag) {
+        Iterable<Post> posts = postService.findAllByHasTag(hasTag.get());
+        if (!posts.iterator().hasNext()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
