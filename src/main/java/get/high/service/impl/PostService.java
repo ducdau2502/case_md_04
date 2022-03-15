@@ -23,6 +23,9 @@ public class PostService implements IPostService {
     @Autowired
     private ILikePostService iLikePostService;
 
+    @Autowired
+    private LikePostService likePostService;
+
     @Override
     public Iterable<Post> findAll() {
         return iPostRepository.findAll();

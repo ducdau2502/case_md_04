@@ -1,6 +1,7 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Comment;
+import get.high.model.entity.Post;
 import get.high.model.entity.UserInfo;
 import get.high.repository.ICommentRepository;
 import get.high.service.ICommentService;

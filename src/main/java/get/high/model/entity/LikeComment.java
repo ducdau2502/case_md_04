@@ -10,6 +10,9 @@ public class LikeComment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(nullable = false)
+    private int status;
+
     @ManyToOne
     @JoinColumn(name = "comment_id")
     private Comment comment;
@@ -32,6 +35,14 @@ public class LikeComment {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public Comment getComment() {

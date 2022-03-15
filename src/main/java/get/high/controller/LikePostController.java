@@ -36,10 +36,21 @@ public class LikePostController {
             Post post = postService.findById(post_id).get();
             LikePost likePost = new LikePost(post, userInfo);
             likePostService.save(likePost);
+            return new ResponseEntity<>(likePost, HttpStatus.OK);
         } else {
             likePostService.remove(likePostOptional.get().getId());
+            return new ResponseEntity<>(likePostOptional.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{post_id}/{userinfo_id}")
+    public ResponseEntity<LikePost> readLikeComment(@PathVariable("post_id") long post_id, @PathVariable("userinfo_id") long userinfo_id) {
+        Optional<LikePost> likePostOptional = likePostService.findByPost_IdAndUserInfo_Id(post_id, userinfo_id);
+        if (likePostOptional.isPresent()) {
+            likePostOptional.get().setStatus(1);
+            likePostService.save(likePostOptional.get());
+        }
+        return new ResponseEntity<>(likePostOptional.get(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

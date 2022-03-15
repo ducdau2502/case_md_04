@@ -36,10 +36,21 @@ public class LikeCommentController {
             Comment comment = commentService.findById(comment_id).get();
             LikeComment likeComment = new LikeComment(comment, userInfo);
             likeCommentService.save(likeComment);
+            return new ResponseEntity<>(likeComment, HttpStatus.OK);
         } else {
             likeCommentService.remove(likeCommentOptional.get().getId());
+            return new ResponseEntity<>(likeCommentOptional.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PutMapping("/{comment_id}/{userinfo_id}")
+    public ResponseEntity<LikeComment> readLikeComment(@PathVariable("comment_id") long comment_id, @PathVariable("userinfo_id") long userinfo_id) {
+        Optional<LikeComment> likeCommentOptional = likeCommentService.findByComment_IdAndUserInfo_Id(comment_id, userinfo_id);
+        if (likeCommentOptional.isPresent()) {
+            likeCommentOptional.get().setStatus(1);
+            likeCommentService.save(likeCommentOptional.get());
+        }
+        return new ResponseEntity<>(likeCommentOptional.get(), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
