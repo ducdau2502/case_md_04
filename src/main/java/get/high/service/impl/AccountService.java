@@ -41,16 +41,16 @@ public class AccountService implements IAccountService {
 
     @Override
     public Optional<Account> findByUsername(String name) {
-        return Optional.empty();
+        return iAccountRepository.findByUsername(name);
     }
 
     @Override
     public Boolean existsByUsername(String name) {
-        return null;
+        return iAccountRepository.existsByUsername(name);
     }
 
     @Override
-    public Boolean existsByEmail(String name) {
-        return null;
+    public Boolean existsByEmail(String email) {
+        return iAccountRepository.existsByEmail(email);
     }
 }
