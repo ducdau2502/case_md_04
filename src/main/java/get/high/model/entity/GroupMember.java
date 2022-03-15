@@ -23,6 +23,12 @@ public class GroupMember {
     public GroupMember() {
     }
 
+    public GroupMember(Integer status, UserInfo userInfo, Groups groups) {
+        this.status = status;
+        this.userInfo = userInfo;
+        this.groups = groups;
+    }
+
     public Long getId() {
         return id;
     }

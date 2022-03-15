@@ -1,6 +1,7 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Friendship;
+import get.high.model.entity.UserInfo;
 import get.high.repository.IFriendshipRepository;
 import get.high.service.IFriendshipService;
 import org.springframework.beans.factory.annotation.Autowired;

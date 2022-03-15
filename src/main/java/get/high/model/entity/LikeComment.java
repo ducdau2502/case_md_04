@@ -21,6 +21,11 @@ public class LikeComment {
     public LikeComment() {
     }
 
+    public LikeComment(Comment comment, UserInfo userInfo) {
+        this.comment = comment;
+        this.userInfo = userInfo;
+    }
+
     public long getId() {
         return id;
     }

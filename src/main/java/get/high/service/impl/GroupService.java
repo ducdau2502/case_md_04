@@ -1,6 +1,7 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Groups;
+import get.high.model.entity.UserInfo;
 import get.high.repository.IGroupRepository;
 import get.high.service.IGroupService;
 import org.springframework.beans.factory.annotation.Autowired;

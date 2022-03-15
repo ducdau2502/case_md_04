@@ -1,6 +1,5 @@
 package get.high.service.impl;
 
-import get.high.model.entity.Comment;
 import get.high.model.entity.LikeComment;
 import get.high.repository.ILikeCommentRepository;
 import get.high.service.ILikeCommentService;
@@ -20,6 +19,11 @@ public class LikeCommentService implements ILikeCommentService {
     }
 
     @Override
+    public Optional<LikeComment> findByComment_IdAndUserInfo_Id(Long comment_id, Long userinfo_id) {
+        return iLikeCommentRepository.findByComment_IdAndUserInfo_Id(comment_id, userinfo_id);
+    }
+
+    @Override
     public Optional<LikeComment> findById(Long id) {
         return iLikeCommentRepository.findById(id);
     }
@@ -30,12 +34,17 @@ public class LikeCommentService implements ILikeCommentService {
     }
 
     @Override
-    public void remove(Long id) {
-        iLikeCommentRepository.deleteById(id);
+    public Long countLikeCommentByComment_Id(Long post_id) {
+        return iLikeCommentRepository.countLikeCommentByComment_Id(post_id);
     }
 
     @Override
-    public void deleteAllByComment(Comment comment) {
-        iLikeCommentRepository.deleteAllByComment(comment);
+    public void deleteAllByComment_Id(Long post_id) {
+        iLikeCommentRepository.deleteAllByComment_Id(post_id);
+    }
+
+    @Override
+    public void remove(Long id) {
+        iLikeCommentRepository.deleteById(id);
     }
 }

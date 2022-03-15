@@ -1,8 +1,13 @@
 package get.high.service;
 
 import get.high.model.entity.LikePost;
-import get.high.model.entity.Post;
+
+import java.util.Optional;
 
 public interface ILikePostService extends IGeneralService<LikePost> {
-    void deleteAllByPost(Post post);
+    Optional<LikePost> findByPost_IdAndUserInfo_Id(Long post_id, Long userinfo_id);
+
+    Long countLikeCommentByPost_Id(Long post_id);
+
+    void deleteAllByPost_Id(Long post_id);
 }

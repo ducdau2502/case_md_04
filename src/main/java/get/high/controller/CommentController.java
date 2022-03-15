@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -21,9 +20,9 @@ public class CommentController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Iterable<Comment>> showAllByPost(@PathVariable("id") Long id) {
-        List<Comment> comments = (List<Comment>) commentService.findAllByPost_Id(id);
+        Iterable<Comment> comments = commentService.findAllByPost_Id(id);
 
-        if (comments.isEmpty()) {
+        if (!comments.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<>(comments, HttpStatus.OK);

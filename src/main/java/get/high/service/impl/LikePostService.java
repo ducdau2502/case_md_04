@@ -1,7 +1,7 @@
 package get.high.service.impl;
 
 import get.high.model.entity.LikePost;
-import get.high.model.entity.Post;
+import get.high.model.entity.UserInfo;
 import get.high.repository.ILikePostRepository;
 import get.high.service.ILikePostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +35,17 @@ public class LikePostService implements ILikePostService {
     }
 
     @Override
-    public void deleteAllByPost(Post post) {
-        iLikePostRepository.deleteAllByPost(post);
+    public Optional<LikePost> findByPost_IdAndUserInfo_Id(Long post_id, Long userinfo_id) {
+        return iLikePostRepository.findByPost_IdAndUserInfo_Id(post_id, userinfo_id);
+    }
+
+    @Override
+    public void deleteAllByPost_Id(Long post_id) {
+        iLikePostRepository.deleteAllByPost_Id(post_id);
+    }
+
+    @Override
+    public Long countLikeCommentByPost_Id(Long post_id) {
+        return iLikePostRepository.countLikeCommentByPost_Id(post_id);
     }
 }
