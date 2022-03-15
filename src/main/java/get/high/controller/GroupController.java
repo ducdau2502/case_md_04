@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.attribute.UserPrincipal;
 import java.time.LocalDate;
 import java.util.Optional;
 
@@ -75,7 +77,8 @@ public class GroupController {
     //tạo post trong group + upload-File
     @PostMapping("/create-post/{groups_id}/{userinfo_id}")
     public ResponseEntity<Post> createPost(@PathVariable("groups_id") Long groups_id, @PathVariable("userinfo_id") Long userinfo_id,
-                                           @RequestPart Post post, @RequestPart("file") MultipartFile file) {
+                                           @RequestPart Post post, @RequestPart("file") MultipartFile file,
+                                           UserPrincipal userPrincipal) {
         post.setDateCreated(LocalDate.now());
         String fileName = file.getOriginalFilename();
         try {
