@@ -15,6 +15,11 @@ public class FriendshipService implements IFriendshipService {
     private IFriendshipRepository iFriendshipRepository;
 
     @Override
+    public Optional<Friendship> findFriendshipByFromUser_IdAndToUser_Id(Long from_user_id, Long to_user_id) {
+        return iFriendshipRepository.findFriendshipByFromUser_IdAndToUser_Id(from_user_id, to_user_id);
+    }
+
+    @Override
     public Iterable<Friendship> findAll() {
         return iFriendshipRepository.findAll();
     }
