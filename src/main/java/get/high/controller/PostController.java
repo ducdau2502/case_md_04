@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
@@ -19,6 +20,15 @@ import java.util.Optional;
 public class PostController {
     @Autowired
     private IPostService postService;
+
+    @GetMapping
+    public ResponseEntity<Iterable<Post>> findAll() {
+        Iterable<Post> posts = postService.findAll();
+        if (!posts.iterator().hasNext()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
 
     @GetMapping("/search-hasTag")
     public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> hasTag) {
