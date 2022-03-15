@@ -22,6 +22,12 @@ public class Friendship {
     public Friendship() {
     }
 
+    public Friendship(UserInfo fromUser, UserInfo toUser, int status) {
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+        this.status = status;
+    }
+
     public long getId() {
         return id;
     }

@@ -2,6 +2,7 @@ package get.high.service.impl;
 
 import get.high.model.entity.Comment;
 import get.high.model.entity.Post;
+import get.high.model.entity.UserInfo;
 import get.high.repository.IPostRepository;
 import get.high.service.ICommentService;
 import get.high.service.ILikePostService;
@@ -21,6 +22,9 @@ public class PostService implements IPostService {
 
     @Autowired
     private ILikePostService iLikePostService;
+
+    @Autowired
+    private LikePostService likePostService;
 
     @Override
     public Iterable<Post> findAll() {

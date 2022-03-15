@@ -1,6 +1,7 @@
 package get.high.service.impl;
 
 import get.high.model.entity.LikePost;
+import get.high.model.entity.UserInfo;
 import get.high.repository.ILikePostRepository;
 import get.high.service.ILikePostService;
 import org.springframework.beans.factory.annotation.Autowired;

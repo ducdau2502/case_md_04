@@ -1,6 +1,7 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Message;
+import get.high.model.entity.UserInfo;
 import get.high.repository.IMessageRepository;
 import get.high.service.IMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
