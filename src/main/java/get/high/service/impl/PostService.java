@@ -51,4 +51,19 @@ public class PostService implements IPostService {
     public Iterable<Post> findAllByHasTag(String hasTag) {
         return iPostRepository.findAllByContentContaining(hasTag);
     }
+
+    @Override
+    public Iterable<Post> findAllByUserInfo_IdAndStatus(Long userinfo_id, Integer status) {
+        return iPostRepository.findAllByUserInfo_IdAndStatus(userinfo_id, status);
+    }
+
+    @Override
+    public Iterable<Post> findAllByStatus(Integer status) {
+        return iPostRepository.findAllByStatus(status);
+    }
+
+    @Override
+    public Iterable<Post> findAllByUserInfo_Id(Long userinfo_id) {
+        return iPostRepository.findAllByUserInfo_Id(userinfo_id);
+    }
 }

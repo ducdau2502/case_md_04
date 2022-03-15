@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/friendship")
+@RequestMapping("/api/friendship")
 public class FriendshipController {
 
     @Autowired

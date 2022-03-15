@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/group")
+@RequestMapping("/api/group")
 public class GroupController {
     @Value("${file-upload}")
     private String fileUpload;
