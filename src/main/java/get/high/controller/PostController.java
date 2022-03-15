@@ -2,10 +2,13 @@ package get.high.controller;
 
 import get.high.model.entity.Post;
 import get.high.service.IPostService;
+import get.high.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,14 +16,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.File;
+import java.io.IOException;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
 @RequestMapping("/post")
 public class PostController {
+    @Value("C:\\Users\\acer\\OneDrive\\Desktop\\case_md_04\\src\\main\\resources\\static\\images")
+    private String fileUpload;
+
+    @Value("src/main/resources/static/images")
+    private String view;
+
     @Autowired
     private IPostService postService;
+
+    @Autowired
+    private IUserService userService;
 
     @GetMapping("/search-hasTag")
     public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> hasTag) {
@@ -34,44 +49,62 @@ public class PostController {
     @GetMapping
     public ResponseEntity<Iterable<Post>> findAll() {
         Iterable<Post> posts = postService.findAll();
-        if (posts.iterator().hasNext()) {
+        if (!posts.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
+    // detail post
     @GetMapping("/{id}")
     public ResponseEntity<Post> detail(@PathVariable("id") Long id) {
         Optional<Post> post = postService.findById(id);
         return post.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    @PostMapping
-    public ResponseEntity<Post> add(@RequestBody Post post) {
+    //tạo post + upload file
+    @PostMapping("/{userinfo_id}")
+    public ResponseEntity<Post> add(@PathVariable("userinfo_id") Long userinfo_id,
+                                    @RequestPart("post") Post post, @RequestPart("file") MultipartFile file) {
+        post.setDateCreated(LocalDate.now());
+        String fileName = file.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(file.getBytes(), new File(fileUpload + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        post.setImgUrl(view + fileName);
+        post.setUserInfo(userService.findById(userinfo_id).get());
         Post postCreate = postService.save(post);
         return new ResponseEntity<>(postCreate, HttpStatus.CREATED);
     }
 
-    @PostMapping("/upload")
-    public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file,
-                                         @RequestParam("name") String name) {
-        System.out.println(file.getOriginalFilename());
-        System.out.println(name);
-        return new ResponseEntity<>("Done", HttpStatus.OK);
-    }
-
-    @PutMapping
-    public ResponseEntity<Post> update(@RequestBody Post postUpdate, @PathVariable("id") Long id) {
+    //sửa post + upload file
+    @PutMapping("/{id}")
+    public ResponseEntity<Post> update(@PathVariable("id") Long id, @RequestPart("postUpdate") Post postUpdate,
+                                            @RequestPart("file") MultipartFile file) {
         Optional<Post> post = postService.findById(id);
         if (!post.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         postUpdate.setId(post.get().getId());
+        if (file.getSize() != 0) {
+            String fileName = file.getOriginalFilename();
+            try {
+                FileCopyUtils.copy(file.getBytes(), new File(fileUpload + fileName));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            postUpdate.setImgUrl(view + fileName);
+        } else {
+            postUpdate.setImgUrl(post.get().getImgUrl());
+        }
         postUpdate = postService.save(postUpdate);
         return new ResponseEntity<>(postUpdate, HttpStatus.OK);
     }
 
-    @DeleteMapping
+    //xóa post
+    @DeleteMapping("/{id}")
     public ResponseEntity<Post> delete(@PathVariable("id") Long id) {
         Optional<Post> post = postService.findById(id);
         if (!post.isPresent()) {

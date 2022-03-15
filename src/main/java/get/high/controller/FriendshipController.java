@@ -27,8 +27,8 @@ public class FriendshipController {
         }
     }
 
-    @PostMapping("/{from_user_id}/{to_user_id}")
-    public ResponseEntity<Friendship> addFriend(@PathVariable("from_user_id") long from_user_id, @PathVariable("to_user_id") long to_user_id) {
-
-    }
+//    @PostMapping("/{from_user_id}/{to_user_id}")
+//    public ResponseEntity<Friendship> addFriend(@PathVariable("from_user_id") long from_user_id, @PathVariable("to_user_id") long to_user_id) {
+//
+//    }
 }
