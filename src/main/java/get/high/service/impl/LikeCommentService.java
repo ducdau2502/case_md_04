@@ -1,7 +1,8 @@
 package get.high.service.impl;
 
+import get.high.model.entity.Comment;
 import get.high.model.entity.LikeComment;
-import get.high.repository.ILikeCommentReposiroty;
+import get.high.repository.ILikeCommentRepository;
 import get.high.service.ILikeCommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,25 +12,30 @@ import java.util.Optional;
 @Service
 public class LikeCommentService implements ILikeCommentService {
     @Autowired
-    private ILikeCommentReposiroty iLikeCommentReposiroty;
+    private ILikeCommentRepository iLikeCommentRepository;
 
     @Override
     public Iterable<LikeComment> findAll() {
-        return iLikeCommentReposiroty.findAll();
+        return iLikeCommentRepository.findAll();
     }
 
     @Override
     public Optional<LikeComment> findById(Long id) {
-        return iLikeCommentReposiroty.findById(id);
+        return iLikeCommentRepository.findById(id);
     }
 
     @Override
     public LikeComment save(LikeComment likeComment) {
-        return iLikeCommentReposiroty.save(likeComment);
+        return iLikeCommentRepository.save(likeComment);
     }
 
     @Override
     public void remove(Long id) {
-        iLikeCommentReposiroty.deleteById(id);
+        iLikeCommentRepository.deleteById(id);
+    }
+
+    @Override
+    public void deleteAllByComment(Comment comment) {
+        iLikeCommentRepository.deleteAllByComment(comment);
     }
 }

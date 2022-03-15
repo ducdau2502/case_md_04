@@ -1,6 +1,7 @@
 package get.high.service.impl;
 
 import get.high.model.entity.Comment;
+import get.high.model.entity.Post;
 import get.high.repository.ICommentRepository;
 import get.high.service.ICommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,11 @@ public class CommentService implements ICommentService {
     @Override
     public Iterable<Comment> findAllByPost_Id(Long id) {
         return iCommentRepository.findAllByPost_Id(id);
+    }
+
+    @Override
+    public void deleteAllByPost(Post post) {
+
+        iCommentRepository.deleteAllByPost(post);
     }
 }

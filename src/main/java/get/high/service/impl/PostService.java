@@ -13,6 +13,9 @@ public class PostService implements IPostService {
     @Autowired
     private IPostRepository iPostRepository;
 
+    @Autowired
+    private LikePostService likePostService;
+
     @Override
     public Iterable<Post> findAll() {
         return iPostRepository.findAll();
@@ -30,6 +33,7 @@ public class PostService implements IPostService {
 
     @Override
     public void remove(Long id) {
+//        likePostService.deleteAllByPost();
         iPostRepository.deleteById(id);
     }
 
