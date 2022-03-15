@@ -11,5 +11,5 @@ public interface IAccountService extends IGeneralService<Account> {
 
     Boolean existsByUsername(String name);
 
-    Boolean existsByEmail(String name);
+    Boolean existsByEmail(String email);
 }
