@@ -83,7 +83,7 @@ public class AccountController {
 
     @GetMapping("/search-username")
     public ResponseEntity<Iterable<Account>> findAllByUsername(@RequestParam Optional<String> search) {
-        Iterable<Account> accounts = accountService.findAllByUsername(search.get());
+        Iterable<Account> accounts = accountservice.findAllByUsername(search.get());
         if (!accounts.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
