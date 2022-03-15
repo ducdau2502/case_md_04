@@ -23,7 +23,7 @@ import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/post")
+@RequestMapping("/api/post")
 public class PostController {
     @Value("C:\\Users\\acer\\OneDrive\\Desktop\\case_md_04\\src\\main\\resources\\static\\images")
     private String fileUpload;
