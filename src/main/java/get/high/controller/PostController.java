@@ -144,11 +144,13 @@ public class PostController {
             if (friendship.getFromUser().getId() == userinfo_id && friendship.getStatus() == 1) {
                 List<Post> posts_ToUser = (List<Post>) postService.findAllByUserInfo_Id(friendship.getToUser().getId());
                 posts.addAll(posts_ToUser);
-            } if (friendship.getToUser().getId() == userinfo_id && friendship.getStatus() == 1) {
+            } else if (friendship.getToUser().getId() == userinfo_id && friendship.getStatus() == 1) {
                 List<Post> posts_FromUser = (List<Post>) postService.findAllByUserInfo_Id(friendship.getFromUser().getId());
                 posts.addAll(posts_FromUser);
             }
         }
+        List<Post> postUser = (List<Post>) postService.findAllByUserInfo_IdAndStatus(userinfo_id, 1);
+        posts.addAll(postUser);
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }

@@ -38,7 +38,7 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping
+    @GetMapping("/search")
     public ResponseEntity<Iterable<UserInfo>> findAllByFullNameContaining(@RequestParam Optional<String> fullName) {
         Iterable<UserInfo> userInfos = iUserService.findAllByFullNameContaining(fullName.get());
         if (!userInfos.iterator().hasNext()) {
