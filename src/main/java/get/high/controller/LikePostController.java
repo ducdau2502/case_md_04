@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/like-post")
+@RequestMapping("/api/like-post")
 public class LikePostController {
 
     @Autowired

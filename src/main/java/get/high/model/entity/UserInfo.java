@@ -22,6 +22,8 @@ public class UserInfo {
     private String phoneNumber;
     private LocalDate birthday;
     private String address;
+
+
     private String avatarUrl;
 
     @Transient

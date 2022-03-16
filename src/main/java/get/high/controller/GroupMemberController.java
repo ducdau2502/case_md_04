@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/group-member")
+@RequestMapping("/api/group-member")
 public class GroupMemberController {
     @Autowired
     private IGroupMemberService groupMemberService;
