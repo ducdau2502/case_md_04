@@ -1,7 +1,7 @@
 package get.high.controller;
 
+import get.high.model.entity.Friendship;
 import get.high.model.entity.Post;
-import get.high.model.entity.UserInfo;
 import get.high.service.IFriendshipService;
 import get.high.service.IPostService;
 import get.high.service.IUserService;
@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -135,5 +137,22 @@ public class PostController {
         }
         postService.remove(id);
         return new ResponseEntity<>(post.get(), HttpStatus.OK);
+    }
+
+    //New-feeds
+    @GetMapping("/get-new-feeds/{userinfo_id}")
+    public ResponseEntity<Iterable<Post>> getNewFeeds(@PathVariable("userinfo_id") long userinfo_id) {
+        List<Post> posts = (List<Post>) postService.findAllByStatus(0);
+        Iterable<Friendship> friendships = friendshipService.findAll();
+        for (Friendship friendship : friendships) {
+            if (friendship.getFromUser().getId() == userinfo_id && friendship.getStatus() == 1) {
+                List<Post> posts_ToUser = (List<Post>) postService.findAllByUserInfo_Id(friendship.getToUser().getId());
+                posts.addAll(posts_ToUser);
+            } if (friendship.getToUser().getId() == userinfo_id && friendship.getStatus() == 1) {
+                List<Post> posts_FromUser = (List<Post>) postService.findAllByUserInfo_Id(friendship.getFromUser().getId());
+                posts.addAll(posts_FromUser);
+            }
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }
