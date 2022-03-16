@@ -30,10 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserInfo> profile(@PathVariable("id") Long id) {
+    public ResponseEntity<UserInfo> findOne(@PathVariable("id") Long id) {
         Optional<UserInfo> userInfo = iUserService.findById(id);
         return userInfo.map(info -> new ResponseEntity<>(info, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
-
-
 }

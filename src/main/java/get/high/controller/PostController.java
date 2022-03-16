@@ -1,6 +1,8 @@
 package get.high.controller;
 
 import get.high.model.entity.Post;
+import get.high.model.entity.UserInfo;
+import get.high.service.IFriendshipService;
 import get.high.service.IPostService;
 import get.high.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +27,7 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping("/post")
 public class PostController {
-    @Value("C:\\Users\\acer\\OneDrive\\Desktop\\case_md_04\\src\\main\\resources\\static\\images")
+    @Value("${UPLOAD_FILE:}")
     private String fileUpload;
 
     @Value("src/main/resources/static/images")
@@ -36,6 +38,9 @@ public class PostController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IFriendshipService friendshipService;
 
     @GetMapping
     public ResponseEntity<Iterable<Post>> findAll() {
@@ -61,6 +66,24 @@ public class PostController {
         Optional<Post> post = postService.findById(id);
         return post.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
+
+    //profile
+    @GetMapping("/{from_user_id}/{to_user_id}")
+    public ResponseEntity<Iterable<Post>> profile(@PathVariable("from_user_id") long from_user_id,
+                                                  @PathVariable("to_user_id") long to_user_id) {
+        Iterable<Post> posts = postService.findAllByUserInfo_Id(to_user_id);
+        if (!posts.iterator().hasNext()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        if(friendshipService.findFriendshipByFromUser_IdAndToUser_Id(from_user_id, to_user_id).isPresent()) {
+            posts = postService.findAllByStatus(0);
+        } else {
+            posts = postService.findAllByStatus(1);
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+
 
     //tạo post + upload file
     @PostMapping("/{userinfo_id}")
