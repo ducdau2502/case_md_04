@@ -25,10 +25,10 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping("/api/post")
 public class PostController {
-    @Value("C:\\Users\\acer\\OneDrive\\Desktop\\case_md_04\\src\\main\\resources\\static\\images")
+    @Value("${file-upload}")
     private String fileUpload;
 
-    @Value("src/main/resources/static/images")
+    @Value("${view}")
     private String view;
 
     @Autowired
