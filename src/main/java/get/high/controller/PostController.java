@@ -73,19 +73,15 @@ public class PostController {
     @GetMapping("/{from_user_id}/{to_user_id}")
     public ResponseEntity<Iterable<Post>> profile(@PathVariable("from_user_id") long from_user_id,
                                                   @PathVariable("to_user_id") long to_user_id) {
-        Iterable<Post> posts = postService.findAllByUserInfo_Id(to_user_id);
-        if (!posts.iterator().hasNext()) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }
-        if(friendshipService.findFriendshipByFromUser_IdAndToUser_Id(from_user_id, to_user_id).isPresent()) {
-            posts = postService.findAllByStatus(0);
+        Iterable<Post> posts;
+        Optional<Friendship> friendshipOptional = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(from_user_id, to_user_id);
+        if (friendshipOptional.isPresent() & friendshipOptional.get().getStatus() == 1) {
+            posts = postService.findAllByUserInfo_Id(to_user_id);
         } else {
-            posts = postService.findAllByStatus(1);
+            posts = postService.findAllByUserInfo_IdAndStatus(to_user_id, 0);
         }
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
-
-
 
     //tạo post + upload file
     @PostMapping("/{userinfo_id}")
