@@ -36,7 +36,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Optional;
 
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/auth")
 public class AccountController {
@@ -147,7 +147,6 @@ public class AccountController {
 
         account.setRoles(roles);
         accountservice.save(account);
-
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
