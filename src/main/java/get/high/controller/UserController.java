@@ -38,6 +38,16 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    @GetMapping
+    public ResponseEntity<Iterable<UserInfo>> findAllByFullNameContaining(@RequestParam Optional<String> fullName) {
+        Iterable<UserInfo> userInfos = iUserService.findAllByFullNameContaining(fullName.get());
+        if (!userInfos.iterator().hasNext()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(userInfos, HttpStatus.OK);
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<UserInfo> profile(@PathVariable("id") Long id) {
         Optional<UserInfo> userInfo = iUserService.findById(id);

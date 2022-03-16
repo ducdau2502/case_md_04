@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IUserRepository extends JpaRepository<UserInfo, Long> {
+    Iterable<UserInfo> findAllByFullNameContaining(String fullName);
 
 }
