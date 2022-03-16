@@ -28,10 +28,10 @@ import java.util.Optional;
 @CrossOrigin("*")
 @RequestMapping("/api/post")
 public class PostController {
-    @Value("${UPLOAD_FILE:}")
+    @Value("${file-upload}")
     private String fileUpload;
 
-    @Value("src/main/resources/static/images")
+    @Value("${view}")
     private String view;
 
     @Autowired
