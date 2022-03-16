@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 public class UserController {
 
-    @Value("${UPLOAD_FILE:}")
+    @Value("${file-upload}")
     private String fileUpload;
 
     @Value("${view}")
