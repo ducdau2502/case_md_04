@@ -2,6 +2,8 @@ package get.high.controller;
 
 import get.high.model.entity.Comment;
 import get.high.service.ICommentService;
+import get.high.service.IPostService;
+import get.high.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,12 @@ public class CommentController {
 
     @Autowired
     private ICommentService commentService;
+
+    @Autowired
+    private IUserService userService;
+
+    @Autowired
+    private IPostService postService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Iterable<Comment>> showAllByPost(@PathVariable("id") Long id) {
