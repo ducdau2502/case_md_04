@@ -37,15 +37,12 @@ function regis() {
     let newAcount = {
         username: username,
         email : email,
-        password : password
-    };
-
-    let newUserInfor = {
+        password : password,
         fullname :fullname,
         address : address,
         phone : phone,
-        bithday : bithday,
-    }
+        birthDay : bithday
+    };
     $.ajax({
         headers: {
             'Accept': 'application/json',
@@ -56,24 +53,6 @@ function regis() {
         url: "http://localhost:8080/api/auth/signup",
         success: function (data) {
             console.log(data)
-            console.log(newUserInfor)
-            createUserInfor(newUserInfor)
-        }
-    });
-    event.preventDefault();
-}
-
-function createUserInfor(data) {
-    $.ajax({
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        type: "POST",
-        data: JSON.stringify(data),
-        url: "http://localhost:8080/api/auth/signup-userinfor",
-        success: function (d) {
-            console.log(d)
         }
     });
     event.preventDefault();

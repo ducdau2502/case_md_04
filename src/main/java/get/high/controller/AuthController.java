@@ -19,7 +19,6 @@ import get.high.service.impl.AccountService;
 import get.high.service.impl.RoleService;
 import get.high.service.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,7 +35,7 @@ public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
     @Autowired
-    AccountService userRepository;
+    AccountService accountService;
     @Autowired
     RoleService roleRepository;
 
@@ -67,12 +66,12 @@ public class AuthController {
     }
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (accountService.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Username is already taken!"));
         }
-        if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+        if (accountService.existsByEmail(signUpRequest.getEmail())) {
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
@@ -108,12 +107,16 @@ public class AuthController {
             });
         }
         user.setRoles(roles);
-        userRepository.save(user);
+        UserInfo userInfo = new UserInfo();
+        userInfo.setFullName(signUpRequest.getFullname());
+        userInfo.setAddress(signUpRequest.getAddress());
+        userInfo.setPhoneNumber(signUpRequest.getPhone());
+        userInfo.setBirthday(signUpRequest.getBirthDay());
+        Account account = accountService.save(user);
+        userInfo.setAccount(account);
+        userService.save(userInfo);
+
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
 
-    @PostMapping("/signup-userinfor")
-    public ResponseEntity<UserInfo> createUserInfor(@RequestBody UserInfo userInfo) {
-        return new ResponseEntity<>(userService.save(userInfo), HttpStatus.CREATED);
-    }
 }
