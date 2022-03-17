@@ -1,6 +1,7 @@
 package get.high.controller;
 
 import get.high.model.entity.Friendship;
+import get.high.model.entity.LikeComment;
 import get.high.model.entity.UserInfo;
 import get.high.service.IFriendshipService;
 import get.high.service.IUserService;
@@ -10,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -32,6 +35,18 @@ public class FriendshipController {
         } else {
             return new ResponseEntity<>(friendships, HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/notification/{userinfo_id}")
+    public ResponseEntity<Iterable<Friendship>> getNotificationAcceptFriendships(@PathVariable("userinfo_id") long userinfo_id) {
+        List<Friendship> friendships = (List<Friendship>) friendshipService.findAllByStatus(0);
+        List<Friendship> friendshipList = new ArrayList<>();
+        for (Friendship friendship : friendships) {
+            if (friendship.getToUser().getId() == userinfo_id) {
+                friendshipList.add(friendship);
+            }
+        }
+        return new ResponseEntity<>(friendshipList, HttpStatus.OK);
     }
 
     @PostMapping("/{from_user_id}/{to_user_id}")

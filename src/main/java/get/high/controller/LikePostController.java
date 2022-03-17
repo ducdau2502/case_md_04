@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -41,6 +43,18 @@ public class LikePostController {
             likePostService.remove(likePostOptional.get().getId());
             return new ResponseEntity<>(likePostOptional.get(), HttpStatus.OK);
         }
+    }
+
+    @PostMapping("/notification/{userinfo_id}")
+    public ResponseEntity<Iterable<LikePost>> getNotLikePost(@PathVariable("userinfo_id") long userinfo_id) {
+        List<LikePost> likePosts = (List<LikePost>) likePostService.findAllByStatus(0);
+        List<LikePost> likePostIterable = new ArrayList<>();
+        for (LikePost likePost : likePosts) {
+            if (likePost.getPost().getUserInfo().getId() == userinfo_id) {
+                likePostIterable.add(likePost);
+            }
+        }
+        return new ResponseEntity<>(likePostIterable, HttpStatus.OK);
     }
 
     @PutMapping("/{post_id}/{userinfo_id}")

@@ -8,4 +8,6 @@ public interface IFriendshipService extends IGeneralService<Friendship> {
 
     Optional<Friendship> findFriendshipByFromUser_IdAndToUser_Id(Long from_user_id, Long to_user_id);
 
+    Iterable<Friendship> findAllByStatus(Integer status);
+
 }
