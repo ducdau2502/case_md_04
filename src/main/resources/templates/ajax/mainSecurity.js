@@ -53,6 +53,7 @@ function regis() {
         url: "http://localhost:8080/api/auth/signup",
         success: function (data) {
             console.log(data)
+            window.location.href = "form-login.html"
         }
     });
     event.preventDefault();
