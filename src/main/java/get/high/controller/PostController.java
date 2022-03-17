@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,15 +87,19 @@ public class PostController {
     //tạo post + upload file
     @PostMapping("/{userinfo_id}")
     public ResponseEntity<Post> add(@PathVariable("userinfo_id") Long userinfo_id,
-                                    @RequestPart("post") Post post, @RequestPart("file") MultipartFile file) {
+                                    @RequestPart("post") Post post, @RequestPart("file") Optional<MultipartFile> file) {
         post.setDateCreated(LocalDate.now());
-        String fileName = file.getOriginalFilename();
-        try {
-            FileCopyUtils.copy(file.getBytes(), new File(fileUpload + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        post.setImgUrl(view + fileName);
+        String fileName = "";
+       if (file.isPresent()) {
+           fileName = file.get().getOriginalFilename();
+           try {
+               FileCopyUtils.copy(file.get().getBytes(), new File(fileUpload + fileName));
+               post.setImgUrl(view + fileName);
+           } catch (IOException e) {
+               e.printStackTrace();
+           }
+       }
+
         post.setUserInfo(userService.findById(userinfo_id).get());
         Post postCreate = postService.save(post);
         return new ResponseEntity<>(postCreate, HttpStatus.CREATED);
@@ -103,23 +108,29 @@ public class PostController {
     //sửa post + upload file
     @PutMapping("/{id}")
     public ResponseEntity<Post> update(@PathVariable("id") Long id, @RequestPart("postUpdate") Post postUpdate,
-                                            @RequestPart("file") MultipartFile file) {
+                                            @RequestPart("file") Optional<MultipartFile> file) {
         Optional<Post> post = postService.findById(id);
         if (!post.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+
         postUpdate.setId(post.get().getId());
-        if (file.getSize() != 0) {
-            String fileName = file.getOriginalFilename();
-            try {
-                FileCopyUtils.copy(file.getBytes(), new File(fileUpload + fileName));
-            } catch (IOException e) {
-                e.printStackTrace();
+        postUpdate.setDateCreated(post.get().getDateCreated());
+        postUpdate.setGroups(post.get().getGroups());
+        postUpdate.setUserInfo(post.get().getUserInfo());
+
+        if (file.isPresent()) {
+                String fileName = file.get().getOriginalFilename();
+                try {
+                    FileCopyUtils.copy(file.get().getBytes(), new File(fileUpload + fileName));
+                    postUpdate.setImgUrl(view + fileName);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                postUpdate.setImgUrl(post.get().getImgUrl());
             }
-            postUpdate.setImgUrl(view + fileName);
-        } else {
-            postUpdate.setImgUrl(post.get().getImgUrl());
-        }
+
         postUpdate = postService.save(postUpdate);
         return new ResponseEntity<>(postUpdate, HttpStatus.OK);
     }
@@ -142,13 +153,16 @@ public class PostController {
         Iterable<Friendship> friendships = friendshipService.findAll();
         for (Friendship friendship : friendships) {
             if (friendship.getFromUser().getId() == userinfo_id && friendship.getStatus() == 1) {
-                List<Post> posts_ToUser = (List<Post>) postService.findAllByUserInfo_Id(friendship.getToUser().getId());
+                List<Post> posts_ToUser = (List<Post>) postService.findAllByUserInfo_IdAndStatus(friendship.getToUser().getId(), 1);
                 posts.addAll(posts_ToUser);
-            } if (friendship.getToUser().getId() == userinfo_id && friendship.getStatus() == 1) {
-                List<Post> posts_FromUser = (List<Post>) postService.findAllByUserInfo_Id(friendship.getFromUser().getId());
+            } else if (friendship.getToUser().getId() == userinfo_id && friendship.getStatus() == 1) {
+                List<Post> posts_FromUser = (List<Post>) postService.findAllByUserInfo_IdAndStatus(friendship.getFromUser().getId(), 1);
                 posts.addAll(posts_FromUser);
             }
         }
+        List<Post> postUser = (List<Post>) postService.findAllByUserInfo_IdAndStatus(userinfo_id, 1);
+        posts.addAll(postUser);
+        posts.sort((o1, o2) -> (int)(o2.getId()-o1.getId())) ;
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }
