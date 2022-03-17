@@ -18,7 +18,7 @@ function login() {
             console.log(data)
             localStorage.setItem("token", data.jwt)
             localStorage.setItem("user", JSON.stringify(data))
-                // window.location.href = "blog.html"
+                window.location.href = "feeds.html"
         }
     });
     event.preventDefault();

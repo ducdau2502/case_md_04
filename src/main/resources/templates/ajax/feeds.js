@@ -1,6 +1,13 @@
+let user_id = JSON.parse(localStorage.getItem('user')).id;
+
 function findUserById() {
     $.ajax({
         type: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         url: `http://localhost:8080/api/user/1`,
         success: function (data) {
             return data;
@@ -11,6 +18,11 @@ function findUserById() {
 function deletePost(id) {
     if (confirm('Are you sure you want to delete ?') === true) {
         $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             type: "delete",
             url: `http://localhost:8080/api/post/${id}`,
             success: function () {
@@ -25,6 +37,11 @@ function showAllPost() {
     $.ajax({
         type: "GET",
         url: `http://localhost:8080/api/post/get-new-feeds/1`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         success: function (data) {
             console.log(data)
             let content = "";
@@ -75,7 +92,7 @@ function displayPost(post) {
                                     <div class="post-state-btns"> 
                                     <i class="uil-thumbs-up"></i> 
                                     <span id="likeCount${post.id}" style="padding-right: 5px"></span>
-                                    <a onclick="likePost(${post.id},1)" class="view-more-comment"> Like </a>
+                                    <a onclick="likePost(${post.id},user_id)" class="view-more-comment"> Like </a>
                                     </div>
                                 </div>
 
@@ -86,7 +103,7 @@ function displayPost(post) {
                                     <div class="post-add-comment">
                                         <div class="post-add-comment-text-area">
                                             <input type="text" id="commentPost" placeholder="Write your comment...">
-                                            <button type="button" onclick="createCommentPost(${post.id},1)" class="button primary px-6"> Comment </button>
+                                            <button type="button" onclick="createCommentPost(${post.id},user_id)" class="button primary px-6"> Comment </button>
                                         </div>
 
                                     </div>
@@ -102,6 +119,11 @@ function displayPost(post) {
 function showComments(id) {
     $.ajax({
         type: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         url: `http://localhost:8080/api/comment/${id}`,
         success: function (data) {
             let content = "";
@@ -129,7 +151,7 @@ function displayComment(comment) {
             <div class="uk-text-small"> 
                                     <i class="uil-thumbs-up"></i> 
                                     <span id="likeCountComment${comment.id}" style="padding-right: 5px"></span>
-                                    <a onclick="likeComment(${comment.id},1)" class="view-more-comment"> Like </a>
+                                    <a onclick="likeComment(${comment.id},user_id)" class="view-more-comment"> Like </a>
                                     </div>
         </div>
     </div>`
@@ -141,6 +163,11 @@ function displayComment(comment) {
 function countlikePost(id) {
     $.ajax({
         type: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         url: `http://localhost:8080/api/like-post/${id}`,
         success: function (data) {
             // console.log(data)
@@ -152,6 +179,11 @@ function countlikePost(id) {
 function countlikeComment(id) {
     $.ajax({
         type: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         url: `http://localhost:8080/api/like-comment/${id}`,
         success: function (data) {
             console.log(data)
@@ -160,20 +192,30 @@ function countlikeComment(id) {
     });
 }
 
-function likeComment(comment_id, userinfo_id) {
+function likeComment(comment_id, user_id) {
     $.ajax({
         type: "post",
-        url: `http://localhost:8080/api/like-comment/${comment_id}/${userinfo_id}`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/like-comment/${comment_id}/${user_id}`,
         success: function () {
             showAllPost();
         }
     });
 }
 
-function likePost(post_id, userinfo_id) {
+function likePost(post_id, user_id) {
     $.ajax({
         type: "post",
-        url: `http://localhost:8080/api/like-post/${post_id}/${userinfo_id}`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/like-post/${post_id}/${user_id}`,
         success: function () {
             showAllPost();
         }
@@ -200,6 +242,10 @@ function createPost(user_id) {
         data: data,
         processData: false,
         contentType: false,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         //tên API
         url: `http://localhost:8080/api/post/${user_id}`,
         //xử lý khi thành công
@@ -213,10 +259,17 @@ function createPost(user_id) {
     event.preventDefault();
 
 }
+
 let index = 0;
+
 function editPost(id) {
     $.ajax({
         type: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         url: `http://localhost:8080/api/post/${id}`,
         success: function (data) {
             $('#contentPost').val(data.content);
@@ -249,6 +302,10 @@ function updatePost() {
         data: data,
         processData: false,
         contentType: false,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         //tên API
         url: `http://localhost:8080/api/post/${index}`,
         //xử lý khi thành công
@@ -262,12 +319,12 @@ function updatePost() {
     event.preventDefault();
 }
 
-function createCommentPost(post_id, userinfo_id) {
+function createCommentPost(post_id, user_id) {
     let content = $('#commentPost').val();
     let newComment = {
         content: content,
         userInfo: {
-            id: userinfo_id
+            id: user_id
         },
         post: {
             id: post_id
@@ -278,19 +335,17 @@ function createCommentPost(post_id, userinfo_id) {
     $.ajax({
         headers: {
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         type: "POST",
         data: JSON.stringify(newComment),
-        //tên API
         url: `http://localhost:8080/api/comment`,
-        //xử lý khi thành công
         success: function () {
             showAllPost();
         }
 
     });
-    //chặn sự kiện mặc định của thẻ
     event.preventDefault();
 }
 

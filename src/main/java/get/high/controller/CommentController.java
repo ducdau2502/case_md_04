@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/api/comment/1")
+@RequestMapping("/api/comment")
 public class CommentController {
 
     @Autowired
