@@ -20,11 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/api/group")
+@RequestMapping("api/group")
 public class GroupController {
     @Value("${file-upload}")
     private String fileUpload;
@@ -53,10 +55,29 @@ public class GroupController {
         return new ResponseEntity<>(groupMembers, HttpStatus.OK);
     }
 
-    @GetMapping("/get-group")
-    public ResponseEntity<Iterable<Groups>> getAllGroups() {
-        Iterable<Groups> groupsList = groupService.findAll();
-        if (!groupsList.iterator().hasNext()) {
+    @GetMapping("/get-group/{userinfo_id}")
+    public ResponseEntity<Iterable<Groups>> getAllGroups(@PathVariable("userinfo_id") Long userinfo_id) {
+        List<Groups> groupsList = (List<Groups>) groupService.findAll();
+        List<Groups> myGroups = new ArrayList<>();
+        for (Groups groups : groupsList) {
+            Optional<GroupMember> groupMemberOptional = groupMemberService.findByGroups_IdAndUserInfo_Id(groups.getId(), userinfo_id);
+            if (groupMemberOptional.isPresent()) {
+                myGroups.add(groups);
+            }
+        }
+        groupsList.removeAll(myGroups);
+        return new ResponseEntity<>(groupsList, HttpStatus.OK);
+    }
+
+    @GetMapping("/get-my-group/{userinfo_id}")
+    public ResponseEntity<Iterable<Groups>> getMyGroups(@PathVariable("userinfo_id") Long userinfo_id) {
+        List<GroupMember> groupMembers = (List<GroupMember>) groupMemberService.findAllByUserInfo_IdAndStatus(userinfo_id, 0);
+        groupMembers.addAll((List<GroupMember>) groupMemberService.findAllByUserInfo_IdAndStatus(userinfo_id, 1));
+        List<Groups> groupsList = new ArrayList<>();
+        for (GroupMember groupMember : groupMembers) {
+            groupsList.add(groupMember.getGroups());
+        }
+        if (groupsList.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(groupsList, HttpStatus.OK);
@@ -74,7 +95,7 @@ public class GroupController {
 
     //tạo post trong group + upload-File
     @PostMapping("/create-post/{groups_id}/{userinfo_id}")
-    public ResponseEntity<Post> createPost(@PathVariable("groups_id") Long groups_id, @PathVariable("userinfo_id") Long userinfo_id,
+    public ResponseEntity<Post> createPost(@PathVariable("group_id") Long group_id, @PathVariable("userinfo_id") Long userinfo_id,
                                            @RequestPart Post post, @RequestPart("file") MultipartFile file) {
         post.setDateCreated(LocalDate.now());
         String fileName = file.getOriginalFilename();
@@ -84,7 +105,7 @@ public class GroupController {
             e.printStackTrace();
         }
         post.setImgUrl(view + fileName);
-        post.setGroups(groupService.findById(groups_id).get());
+        post.setGroups(groupService.findById(group_id).get());
         post.setUserInfo(userService.findById(userinfo_id).get());
         Post postCreate = postService.save(post);
         return new ResponseEntity<>(postCreate, HttpStatus.CREATED);

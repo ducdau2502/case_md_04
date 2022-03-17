@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/api/message")
+@RequestMapping("api/message")
 public class MessageController {
 }
