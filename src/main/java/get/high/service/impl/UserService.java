@@ -32,4 +32,9 @@ public class UserService implements IUserService {
     public void remove(Long id) {
         iUserRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<UserInfo> findAllByFullNameContaining(String fullName) {
+        return iUserRepository.findAllByFullNameContaining(fullName);
+    }
 }
