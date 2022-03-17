@@ -1,6 +1,8 @@
 package get.high.controller;
 
+import get.high.model.entity.Friendship;
 import get.high.model.entity.Post;
+import get.high.service.IFriendshipService;
 import get.high.service.IPostService;
 import get.high.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,16 +21,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
 @RequestMapping("/api/post")
 public class PostController {
-    @Value("C:\\Users\\acer\\OneDrive\\Desktop\\case_md_04\\src\\main\\resources\\static\\images")
+    @Value("${file-upload}")
     private String fileUpload;
 
-    @Value("src/main/resources/static/images")
+    @Value("${view}")
     private String view;
 
     @Autowired
@@ -36,6 +40,9 @@ public class PostController {
 
     @Autowired
     private IUserService userService;
+
+    @Autowired
+    private IFriendshipService friendshipService;
 
     @GetMapping
     public ResponseEntity<Iterable<Post>> findAll() {
@@ -60,6 +67,20 @@ public class PostController {
     public ResponseEntity<Post> detail(@PathVariable("id") Long id) {
         Optional<Post> post = postService.findById(id);
         return post.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    //profile
+    @GetMapping("/{from_user_id}/{to_user_id}")
+    public ResponseEntity<Iterable<Post>> profile(@PathVariable("from_user_id") long from_user_id,
+                                                  @PathVariable("to_user_id") long to_user_id) {
+        Iterable<Post> posts;
+        Optional<Friendship> friendshipOptional = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(from_user_id, to_user_id);
+        if (friendshipOptional.isPresent() & friendshipOptional.get().getStatus() == 1) {
+            posts = postService.findAllByUserInfo_Id(to_user_id);
+        } else {
+            posts = postService.findAllByUserInfo_IdAndStatus(to_user_id, 0);
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
     //tạo post + upload file
@@ -112,5 +133,22 @@ public class PostController {
         }
         postService.remove(id);
         return new ResponseEntity<>(post.get(), HttpStatus.OK);
+    }
+
+    //New-feeds
+    @GetMapping("/get-new-feeds/{userinfo_id}")
+    public ResponseEntity<Iterable<Post>> getNewFeeds(@PathVariable("userinfo_id") long userinfo_id) {
+        List<Post> posts = (List<Post>) postService.findAllByStatus(0);
+        Iterable<Friendship> friendships = friendshipService.findAll();
+        for (Friendship friendship : friendships) {
+            if (friendship.getFromUser().getId() == userinfo_id && friendship.getStatus() == 1) {
+                List<Post> posts_ToUser = (List<Post>) postService.findAllByUserInfo_Id(friendship.getToUser().getId());
+                posts.addAll(posts_ToUser);
+            } if (friendship.getToUser().getId() == userinfo_id && friendship.getStatus() == 1) {
+                List<Post> posts_FromUser = (List<Post>) postService.findAllByUserInfo_Id(friendship.getFromUser().getId());
+                posts.addAll(posts_FromUser);
+            }
+        }
+        return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }

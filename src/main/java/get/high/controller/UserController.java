@@ -20,7 +20,7 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 public class UserController {
 
-    @Value("${UPLOAD_FILE:}")
+    @Value("${file-upload}")
     private String fileUpload;
 
     @Value("${view}")
@@ -36,6 +36,16 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity<Iterable<UserInfo>> findAllByFullNameContaining(@RequestParam Optional<String> fullName) {
+        Iterable<UserInfo> userInfos = iUserService.findAllByFullNameContaining(fullName.get());
+        if (!userInfos.iterator().hasNext()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(userInfos, HttpStatus.OK);
+        }
     }
 
     @GetMapping("/{id}")
