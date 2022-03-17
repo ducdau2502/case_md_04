@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Controller
 @CrossOrigin("*")
-@RequestMapping("/api/user")
+@RequestMapping("api/user")
 public class UserController {
 
     @Value("${file-upload}")

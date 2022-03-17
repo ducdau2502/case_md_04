@@ -38,4 +38,14 @@ public class GroupMemberService implements IGroupMemberService {
     public Optional<GroupMember> findByGroups_IdAndUserInfo_Id(Long groups_id, Long userinfo_id) {
         return iGroupMemberRepository.findByGroups_IdAndUserInfo_Id(groups_id, userinfo_id);
     }
+
+    @Override
+    public Iterable<GroupMember> findAllByUserInfo_IdAndStatus(Long userinfo_id, Integer status) {
+        return iGroupMemberRepository.findAllByUserInfo_IdAndStatus(userinfo_id, status);
+    }
+
+    @Override
+    public Iterable<GroupMember> findAllByGroups_IdAndStatus(Long groups_id, Integer status) {
+        return iGroupMemberRepository.findAllByGroups_IdAndStatus(groups_id, status);
+    }
 }
