@@ -43,7 +43,6 @@ function showAllPost() {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (data) {
-            console.log(data)
             let content = "";
             if (data !== undefined) {
                 for (let i = 0; i < data.length; i++) {
@@ -57,7 +56,6 @@ function showAllPost() {
 
 
 function displayPost(post) {
-    console.log(post)
     let content = "";
     content += `<div class="post">
                                 <div class="post-heading">
@@ -92,7 +90,7 @@ function displayPost(post) {
                                     <div class="post-state-btns"> 
                                     <i class="uil-thumbs-up"></i> 
                                     <span id="likeCount${post.id}" style="padding-right: 5px"></span>
-                                    <a onclick="likePost(${post.id},user_id)" class="view-more-comment"> Like </a>
+                                    <a onclick="likePost(${post.id})" class="view-more-comment"> Like </a>
                                     </div>
                                 </div>
 
@@ -103,7 +101,7 @@ function displayPost(post) {
                                     <div class="post-add-comment">
                                         <div class="post-add-comment-text-area">
                                             <input type="text" id="commentPost" placeholder="Write your comment...">
-                                            <button type="button" onclick="createCommentPost(${post.id},user_id)" class="button primary px-6"> Comment </button>
+                                            <button type="button" onclick="createCommentPost(${post.id})" class="button primary px-6"> Comment </button>
                                         </div>
 
                                     </div>
@@ -132,7 +130,6 @@ function showComments(id) {
                     content += displayComment(data[i]);
                 }
             }
-            console.log(data)
             document.getElementById("commentList" + id).innerHTML = content;
         }
     })
@@ -151,7 +148,7 @@ function displayComment(comment) {
             <div class="uk-text-small"> 
                                     <i class="uil-thumbs-up"></i> 
                                     <span id="likeCountComment${comment.id}" style="padding-right: 5px"></span>
-                                    <a onclick="likeComment(${comment.id},user_id)" class="view-more-comment"> Like </a>
+                                    <a onclick="likeComment(${comment.id})" class="view-more-comment"> Like </a>
                                     </div>
         </div>
     </div>`
@@ -170,7 +167,6 @@ function countlikePost(id) {
         },
         url: `http://localhost:8080/api/like-post/${id}`,
         success: function (data) {
-            // console.log(data)
             document.getElementById("likeCount" + id).innerHTML = data;
         }
     });
@@ -186,13 +182,12 @@ function countlikeComment(id) {
         },
         url: `http://localhost:8080/api/like-comment/${id}`,
         success: function (data) {
-            console.log(data)
             document.getElementById("likeCountComment" + id).innerHTML = data;
         }
     });
 }
 
-function likeComment(comment_id, user_id) {
+function likeComment(comment_id) {
     $.ajax({
         type: "post",
         headers: {
@@ -202,12 +197,12 @@ function likeComment(comment_id, user_id) {
         },
         url: `http://localhost:8080/api/like-comment/${comment_id}/${user_id}`,
         success: function () {
-            showAllPost();
+            // showAllPost();
         }
     });
 }
 
-function likePost(post_id, user_id) {
+function likePost(post_id) {
     $.ajax({
         type: "post",
         headers: {
@@ -217,7 +212,7 @@ function likePost(post_id, user_id) {
         },
         url: `http://localhost:8080/api/like-post/${post_id}/${user_id}`,
         success: function () {
-            showAllPost();
+            // showAllPost();
         }
     });
 }
@@ -236,7 +231,6 @@ function createPost() {
         type: "application/json"
     }))
 
-    //gọi ajax
     $.ajax({
         type: "POST",
         data: data,
@@ -246,16 +240,13 @@ function createPost() {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        //tên API
         url: `http://localhost:8080/api/post/${user_id}`,
-        //xử lý khi thành công
         success: function () {
             showAllPost();
             document.getElementById("formCreatePost").reset();
         }
 
     });
-    //chặn sự kiện mặc định của thẻ
     event.preventDefault();
 
 }
@@ -296,7 +287,6 @@ function updatePost() {
         type: "application/json"
     }))
 
-    //gọi ajax
     $.ajax({
         type: "put",
         data: data,
@@ -306,20 +296,17 @@ function updatePost() {
             'Accept': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        //tên API
         url: `http://localhost:8080/api/post/${index}`,
-        //xử lý khi thành công
         success: function () {
-            showAllPost();
+            // showAllPost();
             document.getElementById("formCreatePost").reset();
         }
 
     });
-    //chặn sự kiện mặc định của thẻ
     event.preventDefault();
 }
 
-function createCommentPost(post_id, user_id) {
+function createCommentPost(post_id) {
     let content = $('#commentPost').val();
     let newComment = {
         content: content,
@@ -331,7 +318,6 @@ function createCommentPost(post_id, user_id) {
         }
     };
 
-    //gọi ajax
     $.ajax({
         headers: {
             'Accept': 'application/json',
@@ -342,7 +328,35 @@ function createCommentPost(post_id, user_id) {
         data: JSON.stringify(newComment),
         url: `http://localhost:8080/api/comment`,
         success: function () {
-            showAllPost();
+            // showAllPost();
+            showComments(post_id);
+            document.getElementById("commentPost").value = "";
+        }
+
+    });
+    event.preventDefault();
+}
+
+function searchPost() {
+    let search = $('#searchPostInput').val();
+
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        type: "GET",
+        url: `http://localhost:8080/api/post/search-content?search=${search}`,
+        success: function (data) {
+            let content = "";
+            if (data !== undefined) {
+                for (let i = 0; i < data.length; i++) {
+                    content += displayPost(data[i]);
+                }
+            }
+            document.getElementById("postList").innerHTML = content;
+            document.getElementById("searchPostInput").value = "";
         }
 
     });

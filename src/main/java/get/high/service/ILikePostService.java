@@ -10,4 +10,6 @@ public interface ILikePostService extends IGeneralService<LikePost> {
     Long countLikeCommentByPost_Id(Long post_id);
 
     void deleteAllByPost_Id(Long post_id);
+
+    Iterable<LikePost> findAllByStatus(Integer status);
 }

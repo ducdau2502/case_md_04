@@ -54,12 +54,13 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-    @GetMapping("/search-hasTag")
-    public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> hasTag) {
-        Iterable<Post> posts = postService.findAllByHasTag(hasTag.get());
+    @GetMapping("/search-content")
+    public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> search) {
+        List<Post> posts = (List<Post>) postService.findAllByHasTag(search.get());
         if (!posts.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        posts.sort((o1, o2) -> (int) (o2.getId() - o1.getId()));
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 

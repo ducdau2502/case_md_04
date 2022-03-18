@@ -48,4 +48,9 @@ public class LikePostService implements ILikePostService {
     public Long countLikeCommentByPost_Id(Long post_id) {
         return iLikePostRepository.countLikeCommentByPost_Id(post_id);
     }
+
+    @Override
+    public Iterable<LikePost> findAllByStatus(Integer status) {
+        return iLikePostRepository.findAllByStatus(status);
+    }
 }

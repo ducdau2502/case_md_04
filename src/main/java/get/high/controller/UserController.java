@@ -35,12 +35,12 @@ public class UserController {
         if (!userInfos.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(userInfos, HttpStatus.OK);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<Iterable<UserInfo>> findAllByFullNameContaining(@RequestParam Optional<String> fullName) {
-        Iterable<UserInfo> userInfos = iUserService.findAllByFullNameContaining(fullName.get());
+    public ResponseEntity<Iterable<UserInfo>> findAllByFullNameContaining(@RequestParam Optional<String> search) {
+        Iterable<UserInfo> userInfos = iUserService.findAllByFullNameContaining(search.get());
         if (!userInfos.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {

@@ -2,6 +2,7 @@ package get.high.controller;
 
 import get.high.model.entity.Comment;
 import get.high.model.entity.LikeComment;
+import get.high.model.entity.LikePost;
 import get.high.model.entity.UserInfo;
 import get.high.service.ICommentService;
 import get.high.service.ILikeCommentService;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -51,6 +54,18 @@ public class LikeCommentController {
             likeCommentService.save(likeCommentOptional.get());
         }
         return new ResponseEntity<>(likeCommentOptional.get(), HttpStatus.OK);
+    }
+
+    @PostMapping("/notification/{userinfo_id}")
+    public ResponseEntity<Iterable<LikeComment>> getNotLikePost(@PathVariable("userinfo_id") long userinfo_id) {
+        List<LikeComment> likeComments = (List<LikeComment>) likeCommentService.findAllByStatus(0);
+        List<LikeComment> likeCommentOptional = new ArrayList<>();
+        for (LikeComment likeComment : likeComments) {
+            if (likeComment.getComment().getUserInfo().getId() == userinfo_id) {
+                likeCommentOptional.add(likeComment);
+            }
+        }
+        return new ResponseEntity<>(likeCommentOptional, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")

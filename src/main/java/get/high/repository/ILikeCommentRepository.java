@@ -1,6 +1,7 @@
 package get.high.repository;
 
 import get.high.model.entity.LikeComment;
+import get.high.model.entity.LikePost;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,4 +17,6 @@ public interface ILikeCommentRepository extends JpaRepository<LikeComment, Long>
     Long countLikeCommentByComment_Id(Long post_id);
 
     void deleteAllByComment_Id(Long post_id);
+
+    Iterable<LikeComment> findAllByStatus(Integer status);
 }

@@ -2,6 +2,7 @@ package get.high.controller;
 
 import get.high.model.entity.GroupMember;
 import get.high.model.entity.Groups;
+import get.high.model.entity.LikeComment;
 import get.high.model.entity.UserInfo;
 import get.high.service.IGroupMemberService;
 import get.high.service.IGroupService;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +63,25 @@ public class GroupMemberController {
         Optional<Groups> groups = groupService.findById(group_id);
         GroupMember groupMember = new GroupMember(2, userInfo.get(), groups.get());
         return new ResponseEntity<>(groupMemberService.save(groupMember), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/notification/{userinfo_id}")
+    public ResponseEntity<Iterable<GroupMember>> getNotificationAcceptGroup(@PathVariable("userinfo_id") long userinfo_id) {
+        List<GroupMember> groupMemberList = (List<GroupMember>) groupMemberService.findAllByStatus(2);
+        List<GroupMember> admin = (List<GroupMember>) groupMemberService.findAllByUserInfo_IdAndStatus(userinfo_id, 0);
+        List<GroupMember> groupMembers = new ArrayList<>();
+        if (!groupMemberList.isEmpty()) {
+            for (GroupMember groupMember: admin) {
+                for (GroupMember group: groupMemberList) {
+                    if (groupMember.getGroups().getId() == group.getGroups().getId() && group.getStatus() == 2) {
+                        groupMembers.add(group);
+                    }
+                }
+            }
+            return new ResponseEntity<>(groupMembers, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
     }
 
     @PutMapping("/join-group/{userinfo_id}/{group_id}")
