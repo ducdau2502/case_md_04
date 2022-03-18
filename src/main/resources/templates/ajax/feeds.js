@@ -86,11 +86,11 @@ function displayPost(post) {
     }
     content += `</div>
                                 </div>
-                                <div class="post-state">
+                                <div onclick="likePost(${post.id})" class="post-state">
                                     <div class="post-state-btns"> 
                                     <i class="uil-thumbs-up"></i> 
                                     <span id="likeCount${post.id}" style="padding-right: 5px"></span>
-                                    <a onclick="likePost(${post.id})" class="view-more-comment"> Like </a>
+                                    <a class="view-more-comment"> Like </a>
                                     </div>
                                 </div>
 
@@ -147,9 +147,8 @@ function displayComment(comment) {
             </div>
             <div class="uk-text-small"> 
                                     <i class="uil-thumbs-up"></i> 
-                                    <span id="likeCountComment${comment.id}" style="padding-right: 5px"></span>
-                                    <a onclick="likeComment(${comment.id})" class="view-more-comment"> Like </a>
-                                    </div>
+                                    <span id="likeCountComment${comment.id}" style="padding-right: 5px"></span><a onclick="likeComment(${comment.id})" class="view-more-comment"> Like </a>
+            </div>
         </div>
     </div>`
 
@@ -197,7 +196,7 @@ function likeComment(comment_id) {
         },
         url: `http://localhost:8080/api/like-comment/${comment_id}/${user_id}`,
         success: function () {
-            // showAllPost();
+            showAllPost();
         }
     });
 }
@@ -212,7 +211,7 @@ function likePost(post_id) {
         },
         url: `http://localhost:8080/api/like-post/${post_id}/${user_id}`,
         success: function () {
-            // showAllPost();
+            showAllPost();
         }
     });
 }
@@ -298,7 +297,7 @@ function updatePost() {
         },
         url: `http://localhost:8080/api/post/${index}`,
         success: function () {
-            // showAllPost();
+            showAllPost();
             document.getElementById("formCreatePost").reset();
         }
 
@@ -328,7 +327,6 @@ function createCommentPost(post_id) {
         data: JSON.stringify(newComment),
         url: `http://localhost:8080/api/comment`,
         success: function () {
-            // showAllPost();
             showComments(post_id);
             document.getElementById("commentPost").value = "";
         }
