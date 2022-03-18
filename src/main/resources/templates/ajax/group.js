@@ -191,7 +191,7 @@ function joinGroup(group_id) {
         type: 'POST',
         url: `http://localhost:8080/api/group-member/send-request/${user_id}/${group_id}`,
         success: function () {
-            // gửi notifications cho admin group duyệt
+           getGroups()
         }
     })
 }

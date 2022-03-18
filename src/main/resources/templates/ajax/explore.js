@@ -38,7 +38,6 @@ function getMyFriends() {
     });
 }
 
-
 function displayAllUser(userInfo) {
     return `<div class="sl_find_frns_user">
                                 <div class="sl_find_frns_user_cover"> 
@@ -182,6 +181,27 @@ function searchUser() {
     });
     event.preventDefault();
 }
+
+// function displayData(userInfo) {
+//     $.ajax({
+//         type: 'GET',
+//         url: `http://localhost:8080/api/friendship/get-friendship/${user_id}/${userInfo.id}`,
+//         headers: {
+//             'Accept': 'application/json',
+//             'Content-Type': 'application/json',
+//             'Authorization': 'Bearer ' + localStorage.getItem('token')
+//         },
+//         success: function (data) {
+//             let content = "";
+//
+//             if (data !== undefined) {
+//                 content += displayAllUserFriend(data);
+//             } else {
+//                 content += displayAllUser(data);
+//             }
+//         }
+//     })
+// }
 
 
 window.onload = getFriends
