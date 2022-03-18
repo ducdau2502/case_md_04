@@ -319,3 +319,92 @@ function createCommentPost(post_id) {
     });
     event.preventDefault();
 }
+
+function createPost() {
+    let data = new FormData();
+    let content = $('#contentPost').val();
+    let status = $('#statusPost').val();
+    let newPost = {
+        content: content,
+        status: status
+    };
+
+    data.append("file", $('#fileImage')[0].files[0]);
+    data.append("post", new Blob([JSON.stringify(newPost)], {
+        type: "application/json"
+    }))
+
+    $.ajax({
+        type: "POST",
+        data: data,
+        processData: false,
+        contentType: false,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/post/${user_id}`,
+        success: function () {
+            showAllPost();
+            document.getElementById("formCreatePost").reset();
+        }
+
+    });
+    event.preventDefault();
+
+}
+
+let index = 0;
+
+function editPost(id) {
+    $.ajax({
+        type: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/post/${id}`,
+        success: function (data) {
+            $('#contentPost').val(data.content);
+            $('#statusPost').val(data.status);
+            index = data.id;
+            document.getElementById("formSubmit").onclick = function () {
+                updatePost();
+            };
+        }
+    });
+}
+
+function updatePost() {
+    let data = new FormData();
+    let content = $('#contentPost').val();
+    let status = $('#statusPost').val();
+    let newPost = {
+        content: content,
+        status: status
+    };
+
+    data.append("file", $('#fileImage')[0].files[0]);
+    data.append("postUpdate", new Blob([JSON.stringify(newPost)], {
+        type: "application/json"
+    }))
+
+    $.ajax({
+        type: "put",
+        data: data,
+        processData: false,
+        contentType: false,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/post/${index}`,
+        success: function () {
+            showAllPost();
+            document.getElementById("formCreatePost").reset();
+        }
+
+    });
+    event.preventDefault();
+}
