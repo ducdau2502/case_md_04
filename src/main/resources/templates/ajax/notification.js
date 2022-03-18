@@ -1,8 +1,9 @@
+let userCurrent_id = JSON.parse(localStorage.getItem('user')).id;
 //notification like post
 function notificationLikePost() {
     $.ajax({
         type: "POST",
-        url: `http://localhost:8080/api/like-post/notification/${user_id}`,
+        url: `http://localhost:8080/api/like-post/notification/${userCurrent_id}`,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -11,7 +12,6 @@ function notificationLikePost() {
         success: function (data) {
             let content = "";
             if (data !== undefined) {
-                console.log(data)
                 for (let i = 0; i < data.length; i++) {
                     content += displayLikePostNotification(data[i]);
                 }
@@ -20,8 +20,6 @@ function notificationLikePost() {
         }
     })
 }
-
-notificationLikePost()
 
 function displayLikePostNotification(likePost) {
     return `<li>
@@ -48,7 +46,6 @@ function checkLikePostNotification(post_id,userinfo_id) {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (data) {
-            console.log(data)
             notificationLikePost()
         }
     })
@@ -58,7 +55,7 @@ function checkLikePostNotification(post_id,userinfo_id) {
 function notificationLikeComment() {
     $.ajax({
         type: "POST",
-        url: `http://localhost:8080/api/like-comment/notification/${user_id}`,
+        url: `http://localhost:8080/api/like-comment/notification/${userCurrent_id}`,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -67,7 +64,6 @@ function notificationLikeComment() {
         success: function (data) {
             let content = "";
             if (data !== undefined) {
-                console.log(data)
                 for (let i = 0; i < data.length; i++) {
                     content += displayLikeCommentNotification(data[i]);
                 }
@@ -76,8 +72,6 @@ function notificationLikeComment() {
         }
     })
 }
-
-notificationLikeComment()
 
 function displayLikeCommentNotification(LikeComment) {
     return `<li>
@@ -104,7 +98,6 @@ function checkLikeCommentNotification(comment_id,userinfo_id) {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (data) {
-            console.log(data)
             notificationLikeComment()
         }
     })
@@ -114,7 +107,7 @@ function checkLikeCommentNotification(comment_id,userinfo_id) {
 function notificationAcceptFriend() {
     $.ajax({
         type: "POST",
-        url: `http://localhost:8080/api/friendship/notification/${user_id}`,
+        url: `http://localhost:8080/api/friendship/notification/${userCurrent_id}`,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -123,7 +116,6 @@ function notificationAcceptFriend() {
         success: function (data) {
             let content = "";
             if (data !== undefined) {
-                console.log(data)
                 for (let i = 0; i < data.length; i++) {
                     content += displayAcceptFriendNotification(data[i]);
                 }
@@ -132,8 +124,6 @@ function notificationAcceptFriend() {
         }
     })
 }
-
-notificationAcceptFriend()
 
 function displayAcceptFriendNotification(friendship) {
     return `<li>
@@ -150,18 +140,103 @@ function displayAcceptFriendNotification(friendship) {
                                    </li>`
 }
 
-function checkAcceptFriendNotification(fromUser_id) {
+function checkAcceptFriendNotification(fromuserCurrent_id) {
     $.ajax({
         type: "PUT",
-        url: `http://localhost:8080/api/friendship/${fromUser_id}/${user_id}`,
+        url: `http://localhost:8080/api/friendship/${fromuserCurrent_id}/${userCurrent_id}`,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (data) {
-            console.log(data)
             notificationAcceptFriend()
         }
     })
 }
+
+//notification accept group
+// function notificationAcceptGroup() {
+//     $.ajax({
+//         type: "POST",
+//         url: `http://localhost:8080/api/group-member/notification/${userCurrent_id}`,
+//         headers: {
+//             'Authorization': 'Bearer ' + localStorage.getItem('token')
+//         },
+//         success: function (data) {
+//             let content = "";
+//             if (data !== undefined) {
+//                 for (let i = 0; i < data.length; i++) {
+//                     content += displayAcceptGroupNotification(data[i]);
+//                 }
+//             }
+//             document.getElementById("notification_accept_group").innerHTML = content;
+//         }
+//     })
+// }
+
+function notificationAcceptGroup() {
+    $.ajax({
+        type: "POST",
+        url: `http://localhost:8080/api/group-member/notification/${userCurrent_id}`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function (data) {
+            let content = "";
+            if (data !== undefined) {
+                for (let i = 0; i < data.length; i++) {
+                    content += displayAcceptGroupNotification(data[i]);
+                }
+            }
+            document.getElementById("notification_accept_group").innerHTML = content;
+        }
+    })
+}
+
+function displayAcceptGroupNotification(groupMember) {
+    return `<li>
+                                       <a onclick="checkAcceptGroupNotification(${groupMember.userInfo.id},${groupMember.groups.id})">
+                                           <span class="notification-avatar">
+                                               <img src="${groupMember.userInfo.avatarUrl}" alt="">
+                                           </span>
+                                           <span class="notification-icon bg-gradient-primary">
+                                               <i class="icon-feather-thumbs-up"></i></span>
+                                           <span class="notification-text">
+                                               <strong>${groupMember.userInfo.fullName}</strong> want to join your group
+                                           </span>
+                                       </a>
+                                   </li>`
+}
+
+function checkAcceptGroupNotification(member_id,group_id) {
+    $.ajax({
+        type: "PUT",
+        url: `http://localhost:8080/api/group-member/join-group/${member_id}/${group_id}`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function (data) {
+            notificationAcceptGroup()
+        }
+    })
+}
+
+
+setTimeout(notificationLikeComment, 1000)
+setTimeout(notificationLikePost, 1000)
+setTimeout(notificationAcceptFriend, 1000)
+setTimeout(notificationAcceptGroup, 1000)
+
+// setInterval(notificationLikeComment, 1000)
+// setInterval(notificationLikePost, 1000)
+// setInterval(notificationAcceptFriend, 1000)
+
+// notificationLikeComment()
+// notificationLikePost()
+// notificationAcceptFriend()
+

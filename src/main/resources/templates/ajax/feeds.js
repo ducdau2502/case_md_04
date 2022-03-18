@@ -197,7 +197,7 @@ function likeComment(comment_id) {
         },
         url: `http://localhost:8080/api/like-comment/${comment_id}/${user_id}`,
         success: function () {
-            showAllPost();
+            // showAllPost();
         }
     });
 }
@@ -212,7 +212,7 @@ function likePost(post_id) {
         },
         url: `http://localhost:8080/api/like-post/${post_id}/${user_id}`,
         success: function () {
-            showAllPost();
+            // showAllPost();
         }
     });
 }
@@ -298,7 +298,7 @@ function updatePost() {
         },
         url: `http://localhost:8080/api/post/${index}`,
         success: function () {
-            showAllPost();
+            // showAllPost();
             document.getElementById("formCreatePost").reset();
         }
 
@@ -328,7 +328,35 @@ function createCommentPost(post_id) {
         data: JSON.stringify(newComment),
         url: `http://localhost:8080/api/comment`,
         success: function () {
-            showAllPost();
+            // showAllPost();
+            showComments(post_id);
+            document.getElementById("commentPost").value = "";
+        }
+
+    });
+    event.preventDefault();
+}
+
+function searchPost() {
+    let search = $('#searchPostInput').val();
+
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        type: "GET",
+        url: `http://localhost:8080/api/post/search-content?search=${search}`,
+        success: function (data) {
+            let content = "";
+            if (data !== undefined) {
+                for (let i = 0; i < data.length; i++) {
+                    content += displayPost(data[i]);
+                }
+            }
+            document.getElementById("postList").innerHTML = content;
+            document.getElementById("searchPostInput").value = "";
         }
 
     });

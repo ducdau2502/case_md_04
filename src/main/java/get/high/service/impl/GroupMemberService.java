@@ -48,4 +48,9 @@ public class GroupMemberService implements IGroupMemberService {
     public Iterable<GroupMember> findAllByGroups_IdAndStatus(Long groups_id, Integer status) {
         return iGroupMemberRepository.findAllByGroups_IdAndStatus(groups_id, status);
     }
+
+    @Override
+    public Iterable<GroupMember> findAllByStatus(Integer status) {
+        return iGroupMemberRepository.findAllByStatus(status);
+    }
 }

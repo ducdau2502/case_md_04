@@ -10,4 +10,6 @@ public interface IGroupMemberService extends IGeneralService<GroupMember> {
     Iterable<GroupMember> findAllByUserInfo_IdAndStatus(Long userinfo_id, Integer status);
 
     Iterable<GroupMember> findAllByGroups_IdAndStatus(Long groups_id, Integer status);
+
+    Iterable<GroupMember> findAllByStatus(Integer status);
 }
