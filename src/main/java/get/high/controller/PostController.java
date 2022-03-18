@@ -77,7 +77,7 @@ public class PostController {
                                                   @PathVariable("to_user_id") long to_user_id) {
         Iterable<Post> posts;
         Optional<Friendship> friendshipOptional = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(from_user_id, to_user_id);
-        if (friendshipOptional.isPresent() & friendshipOptional.get().getStatus() == 1) {
+        if (friendshipOptional.isPresent() && friendshipOptional.get().getStatus() == 1) {
             posts = postService.findAllByUserInfo_Id(to_user_id);
         } else {
             posts = postService.findAllByUserInfo_IdAndStatus(to_user_id, 0);
