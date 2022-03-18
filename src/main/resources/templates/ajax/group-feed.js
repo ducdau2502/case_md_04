@@ -105,11 +105,11 @@ function displayPost(post) {
     }
     content += `</div>
                                 </div>
-                                <div class="post-state">
+                                <div onclick="likePost(${post.id},user_id)" class="post-state">
                                     <div class="post-state-btns"> 
                                     <i class="uil-thumbs-up"></i> 
                                     <span id="likeCount${post.id}" style="padding-right: 5px"></span>
-                                    <a onclick="likePost(${post.id},user_id)" class="view-more-comment"> Like </a>
+                                    <a class="view-more-comment"> Like </a>
                                     </div>
                                 </div>
 
