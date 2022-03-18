@@ -54,7 +54,7 @@ function displayAllUser(userInfo) {
                                 </div>
                                 <div class="sl_find_frns_user_btns">
                                     <span>
-                                        <button type="button" class="btn button small primary">
+                                        <button onclick="sendInvitations(${userInfo.id})" type="button" class="btn button small primary">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -62,7 +62,7 @@ function displayAllUser(userInfo) {
                                                 <line x1="20" y1="8" x2="20" y2="14"></line>
                                                 <line x1="23" y1="11" x2="17" y2="11"></line>
                                             </svg>
-                                            <span onclick="sendInvitations(${userInfo.id})"> Add Friend </span>
+                                            <span> Add Friend </span>
                                         </button>
                                     </span>
                                 </div>
@@ -84,7 +84,7 @@ function displayAllUserFriend(userInfo) {
                                 </div>
                                 <div class="sl_find_frns_user_btns">
                                     <span>
-                                        <button type="button" class="btn button small primary">
+                                        <button  onclick="unfriend(${userInfo.id})" type="button" class="btn button small primary">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                                                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                                 <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -92,7 +92,7 @@ function displayAllUserFriend(userInfo) {
                                                 <line x1="20" y1="8" x2="20" y2="14"></line>
                                                 <line x1="23" y1="11" x2="17" y2="11"></line>
                                             </svg>
-                                            <span onclick="unfriend(${userInfo.id})"> UnFriend </span>
+                                            <span> UnFriend </span>
                                         </button>
                                     </span>
                                     <span>

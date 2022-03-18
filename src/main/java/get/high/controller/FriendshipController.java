@@ -89,7 +89,13 @@ public class FriendshipController {
             friendshipService.save(optionalFriendship.get());
         }
 
-        return new ResponseEntity<>(optionalFriendship.get(), HttpStatus.OK);
+        Optional<Friendship> optionalFriendship1 = friendshipService.findFriendshipByFromUser_IdAndToUser_Id( toUser.getId(), fromUser.getId());
+        if (optionalFriendship1.isPresent()) {
+            optionalFriendship1.get().setStatus(2);
+            friendshipService.save(optionalFriendship1.get());
+        }
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/{from_user_id}/{to_user_id}")
@@ -100,6 +106,10 @@ public class FriendshipController {
         Optional<Friendship> optionalFriendship = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(fromUser.getId(), toUser.getId());
         if (optionalFriendship.isPresent()) {
             friendshipService.remove(optionalFriendship.get().getId());
+        }
+        Optional<Friendship> optionalFriendship1 = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(toUser.getId(), fromUser.getId());
+        if (optionalFriendship1.isPresent()) {
+            friendshipService.remove(optionalFriendship1.get().getId());
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
