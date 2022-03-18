@@ -54,12 +54,13 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-    @GetMapping("/search-hasTag")
-    public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> hasTag) {
-        Iterable<Post> posts = postService.findAllByHasTag(hasTag.get());
+    @GetMapping("/search-content")
+    public ResponseEntity<Iterable<Post>> findAllByHasTag(@RequestParam Optional<String> search) {
+        List<Post> posts = (List<Post>) postService.findAllByHasTag(search.get());
         if (!posts.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        posts.sort((o1, o2) -> (int) (o2.getId() - o1.getId()));
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
@@ -162,7 +163,18 @@ public class PostController {
         }
         List<Post> postUser = (List<Post>) postService.findAllByUserInfo_IdAndStatus(userinfo_id, 1);
         posts.addAll(postUser);
-        posts.sort((o1, o2) -> (int)(o2.getId()-o1.getId())) ;
+        posts.sort((o1, o2) -> (int) (o2.getId()-o1.getId()));
+        return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    //New-feeds-group
+    @GetMapping ("/get-new-feeds-group/{group_id}")
+    public ResponseEntity<Iterable<Post>> getPostGroup(@PathVariable("group_id") Long group_id) {
+        List<Post> posts = (List<Post>) postService.findAllByGroups_Id(group_id);
+        if (!posts.iterator().hasNext()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        posts.sort((o1, o2) -> (int) (o2.getId() - o1.getId()));
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 }

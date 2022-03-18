@@ -47,4 +47,9 @@ public class LikeCommentService implements ILikeCommentService {
     public void remove(Long id) {
         iLikeCommentRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<LikeComment> findAllByStatus(Integer status) {
+        return iLikeCommentRepository.findAllByStatus(status);
+    }
 }

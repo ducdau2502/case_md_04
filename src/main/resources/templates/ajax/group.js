@@ -1,14 +1,14 @@
-let group = 0;
+let user_id = JSON.parse(localStorage.getItem('user')).id;
 
 function displayFormCreate() {
     document.getElementById("form").reset();
     document.getElementById("form").hidden = false;
     document.getElementById("form-button").onclick = function () {
-        addNewGroup(2);
+        addNewGroup();
     }
 }
 
-function addNewGroup(userinfo_id) {
+function addNewGroup() {
     let name = $('#name').val();
     let newGroup = {
         name: name
@@ -17,11 +17,12 @@ function addNewGroup(userinfo_id) {
     $.ajax({
         headers:{
             'Accept': 'application/json',
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         type: 'POST',
         data: JSON.stringify(newGroup),
-        url: `http://localhost:8080/api/group/create-group/${userinfo_id}`,
+        url: `http://localhost:8080/api/group/create-group/${user_id}`,
         success: function () {
             getGroups();
         }
@@ -29,10 +30,15 @@ function addNewGroup(userinfo_id) {
     event.preventDefault();
 }
 
-function getGroups(userinfo_id) {
+function getGroups() {
     $.ajax({
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         type: 'GET',
-        url: `http://localhost:8080/api/group/get-group/${userinfo_id}`,
+        url: `http://localhost:8080/api/group/get-group/${user_id}`,
         success: function (data) {
             let content = '';
             for (let i = 0; i < data.length; i++) {
@@ -44,14 +50,21 @@ function getGroups(userinfo_id) {
     });
 }
 
-function getMyGroups(userinfo_id) {
+function getMyGroups() {
     $.ajax({
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         type: 'GET',
-        url: `http://localhost:8080/api/group/get-my-group/${userinfo_id}`,
+        url: `http://localhost:8080/api/group/get-my-group/${user_id}`,
         success: function (data) {
             let content = '';
-            for (let i = 0; i < data.length; i++) {
-                content += displayGroup1(data[i]);
+            if (data != undefined) {
+                for (let i = 0; i < data.length; i++) {
+                    content += displayGroup1(data[i]);
+                }
             }
             document.getElementById("group_list").innerHTML = content;
             document.getElementById("form").hidden = true;
@@ -65,15 +78,13 @@ function displayGroup(group) {
                                     <div class="sl_group_list">
 
                                         <!-- Group cover -->
-                                        <a href="group-feed.html">
                                             <div class="sl_group_list_media">
                                                 <img src="../static/assets/images/group/group-cover-4.jpg" alt="image">
                                             </div>
-                                        </a>
-
+                             
                                         <!-- Group  Content -->
                                         <div class="sl_group_list_info">
-                                            <h3><a href="group-feed.html">${group.name}</a></h3>
+                                            <h3>${group.name}</h3>
                                             <ul>
                                                 <li> <span> 12 Members </span> </li>
                                                 <li> <span> 2 posts </span> </li>
@@ -91,18 +102,18 @@ function displayGroup(group) {
                                                     <img src="../static/assets/images/avatars/avatar-6.jpg" class="avatars"
                                                          alt="picture">
 
-                                                </a><a href="group-feed.html">See all Members </a>
+                                                </a><a>See all Members </a>
 
                                             </div>
 
                                             <div class="sl_group_list_info_btns">
                                                 <span >
-                                                    <button id="join_group" onclick="joinGroup(4, ${group.id})" type="button" class="button primary small block">
+                                                    <button id="join_group" onclick="joinGroup(user_id, ${group.id})" type="button" class="button primary small block">
                                                         <span> Join</span>
                                                     </button>
                                                 </span>
-                                                <span>
-                                                    <button type="button" class="button light small block">
+                                                <span hidden>
+                                                    <button onclick="viewGroup(user_id, ${group.id})" type="button" class="button light small block">
                                                         <span>View</span>
                                                     </button>
                                                 </span>
@@ -120,7 +131,7 @@ function displayGroup1(group) {
                                     <div class="sl_group_list">
 
                                         <!-- Group cover -->
-                                        <a href="group-feed.html">
+                                        <a>
                                             <div class="sl_group_list_media">
                                                 <img src="../static/assets/images/group/group-cover-4.jpg" alt="image">
                                             </div>
@@ -128,7 +139,7 @@ function displayGroup1(group) {
 
                                         <!-- Group  Content -->
                                         <div class="sl_group_list_info">
-                                            <h3><a href="group-feed.html">${group.name}</a></h3>
+                                            <h3><a>${group.name}</a href="group-feed.html"></h3>
                                             <ul>
                                                 <li> <span> 12 Members </span> </li>
                                                 <li> <span> 2 posts </span> </li>
@@ -146,18 +157,18 @@ function displayGroup1(group) {
                                                     <img src="../static/assets/images/avatars/avatar-6.jpg" class="avatars"
                                                          alt="picture">
 
-                                                </a><a href="group-feed.html">See all Members </a>
+                                                </a><a>See all Members </a>
 
                                             </div>
 
                                             <div class="sl_group_list_info_btns">
                                                 <span hidden>
-                                                    <button id="join_group" onclick="joinGroup(4, ${group.id})" type="button" class="button primary small block">
+                                                    <button id="join_group" onclick="joinGroup(user_id, ${group.id})" type="button" class="button primary small block">
                                                         <span> Join</span>
                                                     </button>
                                                 </span>
                                                 <span>
-                                                    <button type="button" class="button light small block">
+                                                    <button onclick="viewGroup(${group.id})" type="button" class="button light small block">
                                                         <span>View</span>
                                                     </button>
                                                 </span>
@@ -169,31 +180,51 @@ function displayGroup1(group) {
                                 </li>`;
 }
 
-function joinGroup(userinfo_id, group_id) {
+function joinGroup(group_id) {
     $.ajax({
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         type: 'POST',
-        url: `http://localhost:8080/api/group-member/send-request/${userinfo_id}/${group_id}`,
+        url: `http://localhost:8080/api/group-member/send-request/${user_id}/${group_id}`,
         success: function () {
             // gửi notifications cho admin group duyệt
         }
     })
 }
 
-function acceptGroup(userinfo_id, group_id) {
+function viewGroup(group_id) {
+    localStorage.setItem('group_id', group_id);
+    window.location.href = "group-feed.html";
+}
+
+function acceptGroup(group_id) {
     $.ajax({
+        headers:{
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         type: 'PUT',
-        url: `http://localhost:8080/api/group-member/join-group/${userinfo_id}/${group_id}`,
+        url: `http://localhost:8080/api/group-member/join-group/${user_id}/${group_id}`,
         success: function () {
             // gửi notifications
         }
     })
 }
 
-function outGroup(userinfo_id, group_id) {
+function outGroup(group_id) {
     if (confirm('Do you want to leave this group ?') === true) {
         $.ajax({
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
             type: 'DELETE',
-            url: `http://localhost:8080/api/group-member/out-group/${userinfo_id}/${group_id}`,
+            url: `http://localhost:8080/api/group-member/out-group/${user_id}/${group_id}`,
             success: function () {
                 // gửi notifications
             }

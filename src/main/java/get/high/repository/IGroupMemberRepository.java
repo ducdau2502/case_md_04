@@ -1,6 +1,7 @@
 package get.high.repository;
 
 import get.high.model.entity.GroupMember;
+import get.high.model.entity.LikeComment;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,4 +14,6 @@ public interface IGroupMemberRepository extends JpaRepository<GroupMember, Long>
     Iterable<GroupMember> findAllByUserInfo_IdAndStatus(Long userinfo_id, Integer status);
 
     Iterable<GroupMember> findAllByGroups_IdAndStatus(Long groups_id, Integer status);
+
+    Iterable<GroupMember> findAllByStatus(Integer status);
 }

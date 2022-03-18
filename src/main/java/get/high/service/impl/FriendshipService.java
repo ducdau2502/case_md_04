@@ -38,4 +38,9 @@ public class FriendshipService implements IFriendshipService {
     public void remove(Long id) {
         iFriendshipRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<Friendship> findAllByStatus(Integer status) {
+        return iFriendshipRepository.findAllByStatus(status);
+    }
 }

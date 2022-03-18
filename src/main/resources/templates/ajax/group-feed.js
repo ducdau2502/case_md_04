@@ -1,28 +1,370 @@
-function getAllRequest(group_id) {
+let user_id = JSON.parse(localStorage.getItem('user')).id;
+let group_id = JSON.parse(localStorage.getItem('group_id'));
+
+function findGroupById() {
     $.ajax({
-        type: 'GET',
-        url: `http://localhost:8080/api/group-member/get-all-request/${group_id}`,
+        type: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/group/detail/${group_id}`,
         success: function (data) {
-            let content = '<tr>\n' +
-                '<th>Name</th>\n' +
-                '<th>Image</th>\n' +
-                '<th colspan="2">Action</th>\n' +
-                '</tr>';
-            for (let i = 0; i < data.length; i++) {
-                content += displayMember(data[i]);
-            }
-            document.getElementById("all_request").hidden = false;
-            document.getElementById("all_request").innerHTML = content;
+            return data;
         }
     })
 }
 
-function displayMember(member) {
-    return `<tr><td>${member.userinfo.fullName}</td><td><img style="width:100px; height:100px" src="${member.userinfo.avatarUrl}" alt=""></td>
-                    <td><button class="btn btn-danger" onclick="acceptMember(${member.id})">Accept</button></td>
-                    <td><button class="btn btn-warning" onclick="cancelMember(${member.id})">Cancel</button></td></tr>`;
+function deletePost(id) {
+    if (confirm('Are you sure you want to delete ?') === true) {
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            type: "delete",
+            url: `http://localhost:8080/api/post/${id}`,
+            success: function () {
+                showAllPost();
+            }
+        });
+    }
+
 }
 
-// function getAll(group_id) {
-//     getAllRequest(group_id);
-// }
+function showAllPost() {
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:8080/api/post/get-new-feeds-group/${group_id}`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function (data) {
+            console.log(data)
+            let content = "";
+            if (data !== undefined) {
+                for (let i = 0; i < data.length; i++) {
+                    content += displayPost(data[i]);
+                }
+            }
+            document.getElementById("postList").innerHTML = content;
+        }
+    })
+}
+
+function showOne() {
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:8080/api/group/detail/${group_id}`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        success: function (data) {
+            console.log(data)
+            document.getElementById("name_group").innerHTML = `<h3> ${data.name} </h3>`;
+        }
+    })
+}
+
+
+function displayPost(post) {
+    console.log(post)
+    let content = "";
+    content += `<div class="post">
+                                <div class="post-heading">
+                                    <div class="post-avature">
+                                        <img src="../static/assets/images/avatars/avatar-6.jpg" alt="">
+                                    </div>
+                                    <div class="post-title">
+                                        <h4> ${post.userInfo.fullName} </h4>
+                                        <p> ${post.dateCreated} <i class="uil-users-alt"></i> </p>
+                                    </div>
+                                    <div class="post-btn-action">
+                                        <span class="icon-more uil-ellipsis-h"></span>
+                                        <div class="mt-0 p-2" uk-dropdown="pos: top-right;mode:hover ">
+                                            <ul class="uk-nav uk-dropdown-nav">
+                                                <li><a onclick="editPost(${post.id})"> <i class="uil-edit-alt mr-1"></i> Edit Post </a></li>
+                                           
+                                                <li><a onclick="deletePost(${post.id})" class="text-danger"> <i class="uil-trash-alt mr-1"></i>
+                                                    Delete </a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="post-description">
+                                    <div class="fullsizeimg">
+                                    <p style="padding-left: 20px">${post.content}</p>`;
+    if (post.imgUrl != null) {
+        content += `<img src="${post.imgUrl}" alt="">`;
+    }
+    content += `</div>
+                                </div>
+                                <div class="post-state">
+                                    <div class="post-state-btns"> 
+                                    <i class="uil-thumbs-up"></i> 
+                                    <span id="likeCount${post.id}" style="padding-right: 5px"></span>
+                                    <a onclick="likePost(${post.id},user_id)" class="view-more-comment"> Like </a>
+                                    </div>
+                                </div>
+
+                                <!-- post comments -->
+                                <div class="post-comments">
+                                    <a onclick="showComments(${post.id})" class="view-more-comment">View Comments</a>
+                                    <div id="commentList${post.id}"></div>
+                                    <div class="post-add-comment">
+                                        <div class="post-add-comment-text-area">
+                                            <input type="text" id="commentPost" placeholder="Write your comment...">
+                                            <button type="button" onclick="createCommentPost(${post.id},user_id)" class="button primary px-6"> Comment </button>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+<div id="commentList"></div>`
+
+    countlikePost(post.id);
+    return content;
+}
+
+function showComments(id) {
+    $.ajax({
+        type: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/comment/${id}`,
+        success: function (data) {
+            let content = "";
+            if (data !== undefined) {
+                for (let i = 0; i < data.length; i++) {
+                    content += displayComment(data[i]);
+                }
+            }
+            console.log(data)
+            document.getElementById("commentList" + id).innerHTML = content;
+        }
+    })
+}
+
+function displayComment(comment) {
+    let content = `<div class="post-comments-single">
+        <div class="post-comment-avatar">
+            <img src="${comment.userInfo.avatarUrl}" alt="">
+        </div>
+        <div class="post-comment-text">
+            <div class="post-comment-text-inner">
+                <h6> ${comment.userInfo.fullName} </h6>
+                <p> ${comment.content} </p>
+            </div>
+            <div class="uk-text-small"> 
+                                    <i class="uil-thumbs-up"></i> 
+                                    <span id="likeCountComment${comment.id}" style="padding-right: 5px"></span>
+                                    <a onclick="likeComment(${comment.id},user_id)" class="view-more-comment"> Like </a>
+                                    </div>
+        </div>
+    </div>`
+
+    countlikeComment(comment.id);
+    return content;
+}
+
+function countlikePost(id) {
+    $.ajax({
+        type: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/like-post/${id}`,
+        success: function (data) {
+            // console.log(data)
+            document.getElementById("likeCount" + id).innerHTML = data;
+        }
+    });
+}
+
+function countlikeComment(id) {
+    $.ajax({
+        type: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/like-comment/${id}`,
+        success: function (data) {
+            console.log(data)
+            document.getElementById("likeCountComment" + id).innerHTML = data;
+        }
+    });
+}
+
+function likeComment(comment_id, user_id) {
+    $.ajax({
+        type: "post",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/like-comment/${comment_id}/${user_id}`,
+        success: function () {
+            showAllPost();
+        }
+    });
+}
+
+function likePost(post_id, user_id) {
+    $.ajax({
+        type: "post",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/like-post/${post_id}/${user_id}`,
+        success: function () {
+            showAllPost();
+        }
+    });
+}
+
+function createPost() {
+    let data = new FormData();
+    let content = $('#contentPost').val();
+    let status = $('#statusPost').val();
+    let newPost = {
+        content: content,
+        status: status
+    };
+
+    data.append("file", $('#fileImage')[0].files[0]);
+    data.append("post", new Blob([JSON.stringify(newPost)], {
+        type: "application/json"
+    }))
+
+    //gọi ajax
+    $.ajax({
+        type: "POST",
+        data: data,
+        processData: false,
+        contentType: false,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        //tên API
+        url: `http://localhost:8080/api/group/create-post/${group_id}/${user_id}`,
+        //xử lý khi thành công
+        success: function () {
+            showAllPost();
+            document.getElementById("formCreatePost").reset();
+        }
+
+    });
+    //chặn sự kiện mặc định của thẻ
+    event.preventDefault();
+
+}
+
+let index = 0;
+
+function editPost(id) {
+    $.ajax({
+        type: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/post/${id}`,
+        success: function (data) {
+            $('#contentPost').val(data.content);
+            $('#statusPost').val(data.status);
+            index = data.id;
+            document.getElementById("formSubmit").onclick = function () {
+                updatePost();
+            };
+        }
+    });
+}
+
+function updatePost() {
+    let data = new FormData();
+    let content = $('#contentPost').val();
+    let status = $('#statusPost').val();
+    let newPost = {
+        content: content,
+        status: status
+    };
+
+    data.append("file", $('#fileImage')[0].files[0]);
+    data.append("postUpdate", new Blob([JSON.stringify(newPost)], {
+        type: "application/json"
+    }))
+
+    //gọi ajax
+    $.ajax({
+        type: "put",
+        data: data,
+        processData: false,
+        contentType: false,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        //tên API
+        url: `http://localhost:8080/api/post/${index}`,
+        //xử lý khi thành công
+        success: function () {
+            showAllPost();
+            document.getElementById("formCreatePost").reset();
+        }
+
+    });
+    //chặn sự kiện mặc định của thẻ
+    event.preventDefault();
+}
+
+function createCommentPost(post_id, user_id) {
+    let content = $('#commentPost').val();
+    let newComment = {
+        content: content,
+        userInfo: {
+            id: user_id
+        },
+        post: {
+            id: post_id
+        }
+    };
+
+    //gọi ajax
+    $.ajax({
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        type: "POST",
+        data: JSON.stringify(newComment),
+        url: `http://localhost:8080/api/comment`,
+        success: function () {
+            showAllPost();
+        }
+
+    });
+    event.preventDefault();
+}
+
+window.onload = showAllPost;
+window.onload = showOne;
