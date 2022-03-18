@@ -239,6 +239,11 @@ function likePost(post_id, user_id) {
     });
 }
 
+function getImg() {
+    let img = $('#fileImage')[0].files[0]
+    document.getElementById("demo-img").src = "../static/imagesUpload/" + img.name
+}
+
 function createPost() {
     let data = new FormData();
     let content = $('#contentPost').val();
@@ -364,6 +369,24 @@ function createCommentPost(post_id, user_id) {
 
     });
     event.preventDefault();
+}
+
+function outGroup() {
+    if (confirm('Do you want to leave this group ?') === true) {
+        $.ajax({
+            headers:{
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            type: 'DELETE',
+            url: `http://localhost:8080/api/group-member/out-group/${user_id}/${group_id}`,
+            success: function () {
+                localStorage.setItem('group_id', "");
+                window.location.href = "group.html";
+            }
+        })
+    }
 }
 
 window.onload = showAllPost;

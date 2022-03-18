@@ -40,6 +40,7 @@ function getGroups() {
         type: 'GET',
         url: `http://localhost:8080/api/group/get-group/${user_id}`,
         success: function (data) {
+            console.log(data);
             let content = '';
             for (let i = 0; i < data.length; i++) {
                 content += displayGroup(data[i]);
@@ -108,12 +109,12 @@ function displayGroup(group) {
 
                                             <div class="sl_group_list_info_btns">
                                                 <span >
-                                                    <button id="join_group" onclick="joinGroup(user_id, ${group.id})" type="button" class="button primary small block">
+                                                    <button id="join_group" onclick="joinGroup(${group.id})" type="button" class="button primary small block">
                                                         <span> Join</span>
                                                     </button>
                                                 </span>
                                                 <span hidden>
-                                                    <button onclick="viewGroup(user_id, ${group.id})" type="button" class="button light small block">
+                                                    <button onclick="viewGroup(${group.id})" type="button" class="button light small block">
                                                         <span>View</span>
                                                     </button>
                                                 </span>
@@ -163,7 +164,7 @@ function displayGroup1(group) {
 
                                             <div class="sl_group_list_info_btns">
                                                 <span hidden>
-                                                    <button id="join_group" onclick="joinGroup(user_id, ${group.id})" type="button" class="button primary small block">
+                                                    <button id="join_group" onclick="joinGroup(${group.id})" type="button" class="button primary small block">
                                                         <span> Join</span>
                                                     </button>
                                                 </span>
@@ -200,7 +201,7 @@ function viewGroup(group_id) {
     window.location.href = "group-feed.html";
 }
 
-function acceptGroup(group_id) {
+function acceptGroup() {
     $.ajax({
         headers:{
             'Accept': 'application/json',
@@ -215,7 +216,7 @@ function acceptGroup(group_id) {
     })
 }
 
-function outGroup(group_id) {
+function outGroup() {
     if (confirm('Do you want to leave this group ?') === true) {
         $.ajax({
             headers:{
