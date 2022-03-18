@@ -94,17 +94,20 @@ public class GroupController {
     }
 
     //tạo post trong group + upload-File
-    @PostMapping("/create-post/{groups_id}/{userinfo_id}")
+    @PostMapping("/create-post/{group_id}/{userinfo_id}")
     public ResponseEntity<Post> createPost(@PathVariable("group_id") Long group_id, @PathVariable("userinfo_id") Long userinfo_id,
-                                           @RequestPart Post post, @RequestPart("file") MultipartFile file) {
+                                           @RequestPart Post post, @RequestPart("file") Optional<MultipartFile> file) {
         post.setDateCreated(LocalDate.now());
-        String fileName = file.getOriginalFilename();
-        try {
-            FileCopyUtils.copy(file.getBytes(), new File(fileUpload + fileName));
-        } catch (IOException e) {
-            e.printStackTrace();
+        String fileName = "";
+        if (file.isPresent()) {
+            fileName = file.get().getOriginalFilename();
+            try {
+                FileCopyUtils.copy(file.get().getBytes(), new File(fileUpload + fileName));
+                post.setImgUrl(view + fileName);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        post.setImgUrl(view + fileName);
         post.setGroups(groupService.findById(group_id).get());
         post.setUserInfo(userService.findById(userinfo_id).get());
         Post postCreate = postService.save(post);
@@ -118,5 +121,11 @@ public class GroupController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(groupsList, HttpStatus.OK);
+    }
+
+    @GetMapping("/detail/{group_id}")
+    public ResponseEntity<Groups> detail(@PathVariable("group_id") Long group_id) {
+        Optional<Groups> groupOptional = groupService.findById(group_id);
+        return groupOptional.map(groups -> new ResponseEntity<>(groups, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 }

@@ -8,7 +8,7 @@ function findUserById() {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        url: `http://localhost:8080/api/user/1`,
+        url: `http://localhost:8080/api/user/${user_id}`,
         success: function (data) {
             return data;
         }
@@ -36,7 +36,7 @@ function deletePost(id) {
 function showAllPost() {
     $.ajax({
         type: "GET",
-        url: `http://localhost:8080/api/post/get-new-feeds/1`,
+        url: `http://localhost:8080/api/post/get-new-feeds/${user_id}`,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -222,7 +222,7 @@ function likePost(post_id, user_id) {
     });
 }
 
-function createPost(user_id) {
+function createPost() {
     let data = new FormData();
     let content = $('#contentPost').val();
     let status = $('#statusPost').val();
