@@ -27,10 +27,11 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
 
     <!--    ajax-->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <!--    java script-->
     <script src="ajax/explore.js"></script>
+    <script src="ajax/notification.js"></script>
 </head>
 
 <body>
@@ -47,7 +48,7 @@
             <a href="#" class="uk-position-right uk-position-small p-3 uk-offcanvas-close" uk-close></a>
                         <div>
                         
-                            <h2> Explore</h1>
+                            <h1> Explore</h1>
                         
                             <ul class="nav nav-tabs sl_srch_tabs uk-tab" uk-switcher="connect: #component-nav; animation: uk-animation-fade">
                                 <li>
@@ -614,10 +615,10 @@
                    <div id="foot">
        
                        <ul>
-                           <li> <a href="page-term.html"> About Us </a></li>
-                           <li> <a href="page-setting.html"> Setting </a></li>
-                           <li> <a href="page-privacy.html"> Privacy Policy </a></li>
-                           <li> <a href="page-term.html"> Terms - Conditions </a></li>
+                           <li> <a href="#"> About Us </a></li>
+                           <li> <a href="#"> Setting </a></li>
+                           <li> <a href="#"> Privacy Policy </a></li>
+                           <li> <a href="#"> Terms - Conditions </a></li>
                        </ul>
        
        
@@ -662,7 +663,7 @@
                                <input id="search_friend" value="" type="text" class="form-control"
                                    placeholder="Search for Friends , Videos and more.." autocomplete="off">
                                <i class="s_icon uil-search-alt"></i>
-                               <button type="button" onclick="searchUser()">Search</button>
+                               <button type="button" onclick="searchUser()" class="button primary px-6">Search</button>
                            </div>
                        </form>
                    </div>
@@ -872,91 +873,18 @@
                                </div>
 
                                <!-- notiviation list -->
-                               <ul>
-                                   <li>
-                                       <a href="#">
-                                           <span class="notification-avatar">
-                                               <img src="../static/assets/images/avatars/avatar-2.jpg" alt="">
-                                           </span>
-                                           <span class="notification-icon bg-gradient-primary">
-                                               <i class="icon-feather-thumbs-up"></i></span>
-                                           <span class="notification-text">
-                                               <strong>Adrian Moh.</strong> Like Your Comment On Video
-                                               <span class="text-primary">Learn Prototype Faster</span>
-                                               <br> <span class="time-ago"> 9 hours ago </span>
-                                           </span>
-                                       </a>
-                                   </li>
-                                   <li>
-                                       <a href="#">
-                                           <span class="notification-avatar">
-                                               <img src="../static/assets/images/avatars/avatar-3.jpg" alt="">
-                                           </span>
-                                           <span class="notification-icon bg-gradient-danger">
-                                               <i class="icon-feather-star"></i></span>
-                                           <span class="notification-text">
-                                               <strong>Alex Dolgove</strong> Added New Review In Video
-                                               <span class="text-primary">Full Stack PHP Developer</span>
-                                               <br> <span class="time-ago"> 19 hours ago </span>
-                                           </span>
-                                       </a>
-                                   </li>
-                                   <li>
-                                       <a href="#">
-                                           <span class="notification-avatar">
-                                               <img src="../static/assets/images/avatars/avatar-4.jpg" alt="">
-                                           </span>
-                                           <span class="notification-icon bg-gradient-success">
-                                               <i class="icon-feather-message-circle"></i></span>
-                                           <span class="notification-text">
-                                               <strong>Stella John</strong> Replay Your Comment in
-                                               <span class="text-primary">Adobe XD Tutorial</span>
-                                               <br> <span class="time-ago"> 12 hours ago </span>
-                                           </span>
-                                       </a>
-                                   </li>
-                                   <li>
-                                       <a href="#">
-                                           <span class="notification-avatar">
-                                               <img src="../static/assets/images/avatars/avatar-2.jpg" alt="">
-                                           </span>
-                                           <span class="notification-icon bg-gradient-primary">
-                                               <i class="icon-feather-thumbs-up"></i></span>
-                                           <span class="notification-text">
-                                               <strong>Adrian Moh.</strong> Like Your Comment On Video
-                                               <span class="text-primary">Learn Prototype Faster</span>
-                                               <br> <span class="time-ago"> 9 hours ago </span>
-                                           </span>
-                                       </a>
-                                   </li>
-                                   <li>
-                                       <a href="#">
-                                           <span class="notification-avatar">
-                                               <img src="../static/assets/images/avatars/avatar-3.jpg" alt="">
-                                           </span>
-                                           <span class="notification-icon bg-gradient-warning">
-                                               <i class="icon-feather-star"></i></span>
-                                           <span class="notification-text">
-                                               <strong>Alex Dolgove</strong> Added New Review In Video
-                                               <span class="text-primary">Full Stack PHP Developer</span>
-                                               <br> <span class="time-ago"> 19 hours ago </span>
-                                           </span>
-                                       </a>
-                                   </li>
-                                   <li>
-                                       <a href="#">
-                                           <span class="notification-avatar">
-                                               <img src="../static/assets/images/avatars/avatar-4.jpg" alt="">
-                                           </span>
-                                           <span class="notification-icon bg-gradient-success">
-                                               <i class="icon-feather-message-circle"></i></span>
-                                           <span class="notification-text">
-                                               <strong>Stella John</strong> Replay Your Comment in
-                                               <span class="text-primary">Adobe XD Tutorial</span>
-                                               <br> <span class="time-ago"> 12 hours ago </span>
-                                           </span>
-                                       </a>
-                                   </li>
+                               <ul id="notification_like_comment">
+
+                               </ul>
+                               <ul id="notification_like_post">
+
+                               </ul>
+                               <ul id="notification_accept_friend">
+
+                               </ul>
+
+                               <ul id="notification_accept_group">
+
                                </ul>
 
                            </div>
@@ -1003,14 +931,13 @@
                                        </span>
                                    </a>
                                </li>
-                               </li>
                                <li><a href="form-login.html"> <i class="fas fa-sign-out-alt"></i>Log Out</a>
                                </li>
                            </ul>
 
                            <hr class="m-0">
                            <ul class="dropdown-user-menu">
-                               <li><a href="page-setting.html" class="bg-secondery"> <i class="uil-bolt"></i>
+                               <li><a href="#" class="bg-secondery"> <i class="uil-bolt"></i>
                                        <div> Upgrade To Premium <span> Pro features give you complete control </span>
                                        </div>
                                    </a>
@@ -1027,986 +954,51 @@
 
        </div>
 
-            <div class="main_content_inner">
- 
-                <div class="sl_filter_btn" uk-toggle="target: #offcanvas-flip">  <i class="uil-filter"></i>   Open Filter </div>
-                <ul id="component-nav" class="uk-switcher">
+           <div class="main_content_inner">
 
-                <li>
-                <h2> Find Friend</h2>
-                <div  class="section-small pt-2" >
-                    <div id="user_list" class="uk-child-width-1-4@m uk-child-width-1-2@s uk-grid-small" uk-grid>
-                    <!-- users   -->
-                    </div>
-                </div>
-                </li>
+               <h1> Friends </h1>
+               <div class="uk-flex uk-flex-between">
+                   <nav class="responsive-tab style-1 mb-3">
+                       <ul>
+                           <li onclick="getFriends()" class="uk-active"><a href="#"> Suggested friends </a></li>
+                           <li onclick="getMyFriends()"><a href="#"> My friends</a></li>
+                       </ul>
+                   </nav>
 
-                <li>
-                <h2> Browse Pages </h2>
-                <div class="uk-child-width-1-5@m uk-child-width-1-3@s uk-child-width-1-2 uk-grid-small" uk-grid>
-                    <div>
+               </div>
 
-                        <div class="sl_page_list boosted_pages">
 
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-1.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html">Suranna Brand </a></h3>
-                                <span>  Education </span>
-                                <p> 5 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
+               <div class="uk-position-relative" uk-slider="finite: true">
+                   <div class="uk-slider-container px-lg-1 py-3">
+                       <ul id="user_list"
+                           class="uk-slider-items uk-child-width-1-4@m uk-child-width-1-2@s  pr-lg-1 uk-grid uk-grid-small"
+                           uk-scrollspy="target: > div; cls: uk-animation-slide-bottom-small; delay: 100">
 
-                    </div>
-                    <div>
 
-                        <div class="sl_page_list boosted_pages">
+                       </ul>
 
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-6.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html">  Reveal Store </a></h3>
-                                <span> Marketplace </span>
-                                <p> 14 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
+                       <a class="uk-position-center-left-out uk-position-small uk-hidden-hover slidenav-prev"
+                          href="#" uk-slider-item="previous"></a>
+                       <a class="uk-position-center-right-out uk-position-small uk-hidden-hover slidenav-next"
+                          href="#" uk-slider-item="next"></a>
 
-                    </div>
-                    <div>
 
-                        <div class="sl_page_list boosted_pages">
+                   </div>
+               </div>
 
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-7.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html">Suranna Brand </a></h3>
-                                <span>  Education </span>
-                                <p> 5 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
+               <form hidden id="form">
+                   <div class="mb-3 mt-3">
+                       <label for="name" class="form-label">Name:</label>
+                       <input type="text" class="form-control" id="name" placeholder="Enter name">
+                   </div>
+                   <button type="submit" id="form-button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+               </form>
 
-                    </div>
-                    <div>
+               <div class="load-more">
+                   <button class="btn button">Load more groups</button>
+               </div>
 
-                        <div class="sl_page_list boosted_pages">
-
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-lg-4.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html">Suranna Brand </a></h3>
-                                <span>  Education </span>
-                                <p> 5 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_page_list boosted_pages">
-
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-lg-2.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html"> Sky Accounting </a></h3>
-                                <span>  Business </span>
-                                <p> 13 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
-
-                    </div>                        
-                    <div>
-
-                        <div class="sl_page_list boosted_pages">
-
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-lg-2.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html"> Sky Accounting </a></h3>
-                                <span>  Business </span>
-                                <p> 13 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_page_list boosted_pages">
-
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-lg-5.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html">  Phase Designers </a></h3>
-                                <span>  Shopping </span>
-                                <p> 15 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_page_list boosted_pages">
-
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-lg-3.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html">  Reveal Store </a></h3>
-                                <span> Marketplace </span>
-                                <p> 14 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_page_list boosted_pages">
-
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-1.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html">  Phase Designers </a></h3>
-                                <span>  Shopping </span>
-                                <p> 15 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_page_list boosted_pages">
-
-                            <a href="group-feed.html">
-                                <div class="sl_page_list_media">
-                                    <img src="../static/assets/images/avatars/avatar-6.jpg" alt="Picture">
-                                </div>
-                            </a>
-                         
-                            <div class="sl_page_list_info">
-                                <h3> <a href="group-feed.html">  Reveal Store </a></h3>
-                                <span> Marketplace </span>
-                                <p> 14 people like this </p>
-                                <div class="sl_page_list_info_btns">
-                                    <span>
-                                    <button type="button" class="button primary small block">
-                                        <span> like</span>
-                                    </button>
-                                    </span>
-                                </div>
-                    
-                            </div>
-                    
-                        </div>
-
-                    </div>
-                </div>
-                <div class="load-more">
-                    <button class="btn button">Load more Pages</button>
-                </div>
-                </li>
-
-                <li>
-                <h2> Browse Groups  </h2>
-                <div class="uk-child-width-1-4@m uk-child-width-1-2@s uk-grid-small" uk-grid>
-                    <div>
-
-                        <div class="sl_group_list">
-
-                            <!-- Group cover -->
-                            <a href="group-feed.html">
-                                <div class="sl_group_list_media">
-                                    <img src="../static/assets/images/group/group-cover-4.jpg" alt="image">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_group_list_info">
-                                <h3><a href="group-feed.html"> Mountain Riders</a></h3>
-                                <ul>
-                                    <li> <span> 2 Members </span> </li>
-                                    <li> <span> 0 posts </span> </li>
-                                </ul>
-
-                                <div class="sl_avatar-groups sl_hide_members">
-                                    <a href="group-feed.html">
-
-                                        <img src="../static/assets/images/avatars/avatar-1.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-2.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-3.jpg" class="avatars"
-                                             alt="picture">
-
-                                    </a><a href="group-feed.html">See all Members </a>
-
-                                </div>
-
-                                <div class="sl_group_list_info_btns">
-                                    <span>
-                                        <button type="button" class="button primary small block">
-                                            <span> Join</span>
-                                        </button>
-                                    </span>
-                                    <span>
-                                        <button type="button" class="button light small block">
-                                            <span>View</span>
-                                        </button>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_group_list">
-
-                            <!-- Group cover -->
-                            <a href="group-feed.html">
-                                <div class="sl_group_list_media">
-                                    <img src="../static/assets/images/group/group-cover-2.jpg" alt="">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_group_list_info">
-                                <h3><a href="group-feed.html">Coffee Addicts  </a></h3>
-                                <ul>
-                                    <li> <span> 2 Members </span> </li>
-                                    <li> <span> 0 posts </span> </li>
-                                </ul>
-
-                                <div class="sl_avatar-groups sl_hide_members">
-                                    <a href="group-feed.html">
-
-                                        <img src="../static/assets/images/avatars/avatar-1.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-2.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-3.jpg" class="avatars"
-                                             alt="picture">
-
-                                    </a><a href="group-feed.html">See all Members </a>
-
-                                </div>
-
-                                <div class="sl_group_list_info_btns">
-                                    <span>
-                                        <button type="button" class="button primary small block">
-                                            <span> Join</span>
-                                        </button>
-                                    </span>
-                                    <span>
-                                        <button type="button" class="button light small block">
-                                            <span>View</span>
-                                        </button>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_group_list">
-
-                            <!-- Group cover -->
-                            <a href="group-feed.html">
-                                <div class="sl_group_list_media">
-                                    <img src="../static/assets/images/group/group-cover-1.jpg" alt="">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_group_list_info">
-                                <h3><a href="group-feed.html"> Graphic Design</a></h3>
-                                <ul>
-                                    <li> <span> 2 Members </span> </li>
-                                    <li> <span> 0 posts </span> </li>
-                                </ul>
-
-                                <div class="sl_avatar-groups sl_hide_members">
-                                    <a href="group-feed.html">
-
-                                        <img src="../static/assets/images/avatars/avatar-1.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-2.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-3.jpg" class="avatars"
-                                             alt="picture">
-
-                                    </a><a href="group-feed.html">See all Members </a>
-
-                                </div>
-
-                                <div class="sl_group_list_info_btns">
-                                    <span>
-                                        <button type="button" class="button primary small block">
-                                            <span> Join</span>
-                                        </button>
-                                    </span>
-                                    <span>
-                                        <button type="button" class="button light small block">
-                                            <span>View</span>
-                                        </button>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_group_list">
-
-                            <!-- Group cover -->
-                            <a href="group-feed.html">
-                                <div class="sl_group_list_media">
-                                    <img src="../static/assets/images/group/group-cover-3.jpg" alt="">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_group_list_info">
-                                <h3><a href="group-feed.html">Property Rent And Sale </a></h3>
-                                <ul>
-                                    <li> <span> 2 Members </span> </li>
-                                    <li> <span> 0 posts </span> </li>
-                                </ul>
-
-                                <div class="sl_avatar-groups sl_hide_members">
-                                    <a href="group-feed.html">
-
-                                        <img src="../static/assets/images/avatars/avatar-1.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-2.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-3.jpg" class="avatars"
-                                             alt="picture">
-
-                                    </a><a href="group-feed.html">See all Members </a>
-
-                                </div>
-
-                                <div class="sl_group_list_info_btns">
-                                    <span>
-                                        <button type="button" class="button primary small block">
-                                            <span> Join</span>
-                                        </button>
-                                    </span>
-                                    <span>
-                                        <button type="button" class="button light small block">
-                                            <span>View</span>
-                                        </button>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_group_list">
-
-                            <!-- Group cover -->
-                            <a href="group-feed.html">
-                                <div class="sl_group_list_media">
-                                    <img src="../static/assets/images/group/group-cover-1.jpg" alt="">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_group_list_info">
-                                <h3><a href="group-feed.html"> Graphic Design</a></h3>
-                                <ul>
-                                    <li> <span> 2 Members </span> </li>
-                                    <li> <span> 0 posts </span> </li>
-                                </ul>
-
-                                <div class="sl_avatar-groups sl_hide_members">
-                                    <a href="group-feed.html">
-
-                                        <img src="../static/assets/images/avatars/avatar-1.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-2.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-3.jpg" class="avatars"
-                                             alt="picture">
-
-                                    </a><a href="group-feed.html">See all Members </a>
-
-                                </div>
-
-                                <div class="sl_group_list_info_btns">
-                                    <span>
-                                        <button type="button" class="button primary small block">
-                                            <span> Join</span>
-                                        </button>
-                                    </span>
-                                    <span>
-                                        <button type="button" class="button light small block">
-                                            <span>View</span>
-                                        </button>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_group_list">
-
-                            <!-- Group cover -->
-                            <a href="group-feed.html">
-                                <div class="sl_group_list_media">
-                                    <img src="../static/assets/images/group/group-cover-3.jpg" alt="">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_group_list_info">
-                                <h3><a href="group-feed.html">Property Rent And Sale </a></h3>
-                                <ul>
-                                    <li> <span> 2 Members </span> </li>
-                                    <li> <span> 0 posts </span> </li>
-                                </ul>
-
-                                <div class="sl_avatar-groups sl_hide_members">
-                                    <a href="group-feed.html">
-
-                                        <img src="../static/assets/images/avatars/avatar-1.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-2.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-3.jpg" class="avatars"
-                                             alt="picture">
-
-                                    </a><a href="group-feed.html">See all Members </a>
-
-                                </div>
-
-                                <div class="sl_group_list_info_btns">
-                                    <span>
-                                        <button type="button" class="button primary small block">
-                                            <span> Join</span>
-                                        </button>
-                                    </span>
-                                    <span>
-                                        <button type="button" class="button light small block">
-                                            <span>View</span>
-                                        </button>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_group_list">
-
-                            <!-- Group cover -->
-                            <a href="group-feed.html">
-                                <div class="sl_group_list_media">
-                                    <img src="../static/assets/images/group/group-cover-4.jpg" alt="image">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_group_list_info">
-                                <h3><a href="group-feed.html"> Mountain Riders</a></h3>
-                                <ul>
-                                    <li> <span> 2 Members </span> </li>
-                                    <li> <span> 0 posts </span> </li>
-                                </ul>
-
-                                <div class="sl_avatar-groups sl_hide_members">
-                                    <a href="group-feed.html">
-
-                                        <img src="../static/assets/images/avatars/avatar-1.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-2.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-3.jpg" class="avatars"
-                                             alt="picture">
-
-                                    </a><a href="group-feed.html">See all Members </a>
-
-                                </div>
-
-                                <div class="sl_group_list_info_btns">
-                                    <span>
-                                        <button type="button" class="button primary small block">
-                                            <span> Join</span>
-                                        </button>
-                                    </span>
-                                    <span>
-                                        <button type="button" class="button light small block">
-                                            <span>View</span>
-                                        </button>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-
-                        <div class="sl_group_list">
-
-                            <!-- Group cover -->
-                            <a href="group-feed.html">
-                                <div class="sl_group_list_media">
-                                    <img src="../static/assets/images/group/group-cover-2.jpg" alt="">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_group_list_info">
-                                <h3><a href="group-feed.html">Coffee Addicts  </a></h3>
-                                <ul>
-                                    <li> <span> 2 Members </span> </li>
-                                    <li> <span> 0 posts </span> </li>
-                                </ul>
-
-                                <div class="sl_avatar-groups sl_hide_members">
-                                    <a href="group-feed.html">
-
-                                        <img src="../static/assets/images/avatars/avatar-1.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-2.jpg" class="avatars"
-                                             alt="picture">
-                                        <img src="../static/assets/images/avatars/avatar-3.jpg" class="avatars"
-                                             alt="picture">
-
-                                    </a><a href="group-feed.html">See all Members </a>
-
-                                </div>
-
-                                <div class="sl_group_list_info_btns">
-                                    <span>
-                                        <button type="button" class="button primary small block">
-                                            <span> Join</span>
-                                        </button>
-                                    </span>
-                                    <span>
-                                        <button type="button" class="button light small block">
-                                            <span>View</span>
-                                        </button>
-                                    </span>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-                <div class="load-more">
-                    <button class="btn button">Load more Groups</button>
-                </div>
-                </li>
-
-                <li>
-                <h2> Browse Games  </h2>
-                <div class="uk-child-width-1-5@m uk-child-width-1-3@s uk-grid-small" uk-grid>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/img-4.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3>  Mobile Legends </h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/img-5.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3> Minecraft </h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/3.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3> urban basketball </h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/1.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3>8 Ball Pool</h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/2.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3> Big Shot Boxing </h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/3.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3> urban basketball </h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/img-2.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3> ChooxTv </h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/img-3.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3> Larion TV </h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/img-5.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3> Minecraft </h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <div>
-                        <div class="sl_game_list">
-
-                            <!-- Game cover -->
-                            <a href="#">
-                                <div class="sl_game_list_media">
-                                    <img src="../static/assets/images/games/img-4.jpg" alt="Picture">
-                                </div>
-                            </a>
-
-                            <!-- Group  Content -->
-                            <div class="sl_game_list_info">
-                                <h3> Mobile Legends </h3>
-                                <span> 2 users playing</span>
-                                <div class="sl_game_list_info_btns">
-                                    <div class="btn button light block small"><svg xmlns="http://www.w3.org/2000/svg"
-                                            width="24" height="24" viewBox="0 0 24 24">
-                                            <path fill="currentColor"
-                                                d="M9,2V7.5L12,10.5L15,7.5V2H9M2,9V15H7.5L10.5,12L7.5,9H2M16.5,9L13.5,12L16.5,15H22V9H16.5M12,13.5L9,16.5V22H15V16.5L12,13.5M11,18H13V20H11V18Z">
-                                            </path>
-                                        </svg> Play</div>
-                                </div>
-
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-                <div class="load-more">
-                    <button class="btn button">Load more Games</button>
-                </div>
-                </li>
-
-                </ul>
-
-                    
-            </div>
+           </div>
 
         </div>
 
