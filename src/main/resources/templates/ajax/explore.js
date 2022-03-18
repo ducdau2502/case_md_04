@@ -1,6 +1,13 @@
+let user_id = JSON.parse(localStorage.getItem('user')).id;
+
 function getAllUsers() {
     $.ajax({
         type: "GET",
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         url: `http://localhost:8080/api/user`,
         success: function (data) {
             let content = "";
@@ -19,11 +26,11 @@ function displayAllUser(userInfo) {
                                 </div>
                                 <div class="sl_find_frns_user_info">
                                     <div class="sl_find_frns_user_avatar"> 
-                                        <a href="timeline.html">
+                                        <a>
                                             <img src="${userInfo.avatarUrl}" alt="">
                                         </a>
                                     </div>
-                                    <h4> <a href="timeline.html"> ${userInfo.fullName} </a> </h4>
+                                    <h4> <a onclick="openTimeline(${userInfo.id})"> ${userInfo.fullName} </a> </h4>
                                 </div>
                                 <div class="sl_find_frns_user_btns">
                                     <span>
@@ -35,7 +42,7 @@ function displayAllUser(userInfo) {
                                                 <line x1="20" y1="8" x2="20" y2="14"></line>
                                                 <line x1="23" y1="11" x2="17" y2="11"></line>
                                             </svg>
-                                            <span onclick="sendInvitations()"> Add Friend </span>
+                                            <span onclick="sendInvitations(${userInfo.id})"> Add Friend </span>
                                         </button>
                                     </span>
                                     <span>
@@ -52,10 +59,21 @@ function displayAllUser(userInfo) {
     </div>`;
 }
 
-function sendInvitations() {
+function openTimeline(userTimelineId) {
+    localStorage.setItem("timeLineId", userTimelineId);
+    window.location.href = "timeline.html";
+
+}
+
+function sendInvitations(toUser_id) {
     $.ajax({
         type: "POST",
-        url: `http://localhost:8080/api/friendship/{from_user_id}/{to_user_id}`,
+        url: `http://localhost:8080/api/friendship/${user_id}/${toUser_id}`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         success: function () {
             getAllUsers()
         }
@@ -67,6 +85,11 @@ function searchUser() {
     $.ajax({
        type: "GET",
        url: `http://localhost:8080/api/user/search?search=${search}`,
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
         success: function (data) {
             let content = "";
             for (let i = 0; i < data.length; i++) {
