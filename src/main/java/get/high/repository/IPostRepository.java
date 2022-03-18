@@ -13,4 +13,6 @@ public interface IPostRepository extends JpaRepository<Post, Long> {
     Iterable<Post> findAllByStatus(Integer status);
 
     Iterable<Post> findAllByUserInfo_Id(Long userinfo_id);
+
+    Iterable<Post> findAllByGroups_Id(Long groups_id);
 }

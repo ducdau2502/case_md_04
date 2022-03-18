@@ -63,6 +63,11 @@ public class PostService implements IPostService {
     }
 
     @Override
+    public Iterable<Post> findAllByGroups_Id(Long groups_id) {
+        return iPostRepository.findAllByGroups_Id(groups_id);
+    }
+
+    @Override
     public Iterable<Post> findAllByUserInfo_Id(Long userinfo_id) {
         return iPostRepository.findAllByUserInfo_Id(userinfo_id);
     }

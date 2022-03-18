@@ -10,4 +10,6 @@ public interface IPostService extends IGeneralService<Post> {
     Iterable<Post> findAllByUserInfo_IdAndStatus(Long userinfo_id, Integer status);
 
     Iterable<Post> findAllByStatus(Integer status);
+
+    Iterable<Post> findAllByGroups_Id(Long groups_id);
 }
