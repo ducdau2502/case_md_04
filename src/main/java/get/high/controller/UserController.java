@@ -1,6 +1,8 @@
 package get.high.controller;
 
+import get.high.model.entity.Friendship;
 import get.high.model.entity.UserInfo;
+import get.high.service.IFriendshipService;
 import get.high.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +15,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -28,6 +32,9 @@ public class UserController {
 
     @Autowired
     private IUserService iUserService;
+
+    @Autowired
+    private IFriendshipService friendshipService;
 
     @GetMapping
     public ResponseEntity<Iterable<UserInfo>> findAll() {
@@ -69,5 +76,35 @@ public class UserController {
         return new ResponseEntity<>(userInfo.get(),HttpStatus.OK);
     }
 
+    @GetMapping("/get-my-friend/{userinfo_id}")
+    public ResponseEntity<Iterable<UserInfo>> getMyFriend(@PathVariable("userinfo_id") Long userinfo_id) {
+        List<Friendship> friendships = (List<Friendship>) friendshipService.findAll();
+        List<UserInfo> myfriendList = new ArrayList<>();
+        for (Friendship friendship : friendships) {
+            if (friendship.getFromUser().getId() == userinfo_id && friendship.getStatus() == 1) {
+                myfriendList.add(friendship.getToUser());
+            } else if (friendship.getToUser().getId() == userinfo_id && friendship.getStatus() == 1) {
+                myfriendList.add(friendship.getFromUser());
+            }
+        }
+        myfriendList.remove(iUserService.findById(userinfo_id).get());
+        return new ResponseEntity<>(myfriendList, HttpStatus.OK);
+    }
 
+    @GetMapping("/get-no-friend/{userinfo_id}")
+    public ResponseEntity<Iterable<UserInfo>> getNoFriend(@PathVariable("userinfo_id") Long userinfo_id) {
+        List<Friendship> friendships = (List<Friendship>) friendshipService.findAll();
+        List<UserInfo> nofriendList = (List<UserInfo>) iUserService.findAll();
+        List<UserInfo> myfriendList = new ArrayList<>();
+        for (Friendship friendship : friendships) {
+            if (friendship.getFromUser().getId() == userinfo_id) {
+                myfriendList.add(friendship.getToUser());
+            } else if (friendship.getToUser().getId() == userinfo_id) {
+                myfriendList.add(friendship.getFromUser());
+            }
+        }
+        nofriendList.removeAll(myfriendList);
+        nofriendList.remove(iUserService.findById(userinfo_id).get());
+        return new ResponseEntity<>(nofriendList, HttpStatus.OK);
+    }
 }
