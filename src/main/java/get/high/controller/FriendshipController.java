@@ -115,14 +115,14 @@ public class FriendshipController {
     }
 
     @GetMapping("/get-friendship/{from_user_id}/{to_user_id}")
-    public ResponseEntity<Friendship> getFriendship(@PathVariable("from_user_id") long from_user_id, @PathVariable("to_user_id") long to_user_id) {
+    public ResponseEntity<?> getFriendship(@PathVariable("from_user_id") long from_user_id, @PathVariable("to_user_id") long to_user_id) {
         Optional<Friendship> friendshipOptional = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(from_user_id, to_user_id);
         Optional<Friendship> friendshipOptional1 = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(to_user_id, from_user_id);
         if (friendshipOptional.isPresent() && friendshipOptional.get().getStatus() == 1) {
-            return new ResponseEntity<>(friendshipOptional.get(), HttpStatus.OK);
+            return new ResponseEntity<>(1, HttpStatus.OK);
         } else if (friendshipOptional1.isPresent() && friendshipOptional1.get().getStatus() == 1) {
             return new ResponseEntity<>(friendshipOptional1.get(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(3, HttpStatus.OK);
     }
 }

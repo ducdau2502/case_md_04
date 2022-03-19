@@ -209,7 +209,7 @@ function countlikeComment(id) {
     });
 }
 
-function likeComment(comment_id, user_id) {
+function likeComment(comment_id) {
     $.ajax({
         type: "post",
         headers: {
@@ -224,7 +224,7 @@ function likeComment(comment_id, user_id) {
     });
 }
 
-function likePost(post_id, user_id) {
+function likePost(post_id) {
     $.ajax({
         type: "post",
         headers: {
@@ -341,7 +341,7 @@ function updatePost() {
     event.preventDefault();
 }
 
-function createCommentPost(post_id, user_id) {
+function createCommentPost(post_id) {
     let content = $('#commentPost').val();
     let newComment = {
         content: content,
@@ -364,7 +364,8 @@ function createCommentPost(post_id, user_id) {
         data: JSON.stringify(newComment),
         url: `http://localhost:8080/api/comment`,
         success: function () {
-            showAllPost();
+            showComments(post_id);
+            document.getElementById("commentPost").value = "";
         }
 
     });

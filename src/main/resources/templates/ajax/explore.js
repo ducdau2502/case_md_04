@@ -170,19 +170,14 @@ function searchUser() {
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
         success: function (data) {
-            let content = "";
-
-            for (let i = 0; i < data.length; i++) {
-                content += displayAllUser(data[i]);
-            }
-            document.getElementById("user_list").innerHTML = content;
-            document.getElementById("search_friend").reset();
+            document.getElementById("user_list").innerHTML = data.map(user => displayAllUser(user)).join('');
+            document.getElementById("search_friend").value = "";
         }
     });
     event.preventDefault();
 }
 
-// function displayData(userInfo) {
+// function displayData1(userInfo) {
 //     $.ajax({
 //         type: 'GET',
 //         url: `http://localhost:8080/api/friendship/get-friendship/${user_id}/${userInfo.id}`,
@@ -192,12 +187,15 @@ function searchUser() {
 //             'Authorization': 'Bearer ' + localStorage.getItem('token')
 //         },
 //         success: function (data) {
-//             let content = "";
-//
-//             if (data !== undefined) {
-//                 content += displayAllUserFriend(data);
+//             console.log(data);
+//             if (data !== 1) {
+//                 console.log(data)
+//                 const user = data.fromUser
+//                 console.log(user);
+//                return displayAllUserFriend(user);
 //             } else {
-//                 content += displayAllUser(data);
+//                 console.log(data)
+//                 return displayAllUser(data);
 //             }
 //         }
 //     })
