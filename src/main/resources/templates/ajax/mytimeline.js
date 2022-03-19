@@ -405,3 +405,21 @@ function updatePost() {
     });
     event.preventDefault();
 }
+
+function deletePost(id) {
+    if (confirm('Are you sure you want to delete ?') === true) {
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            type: "delete",
+            url: `http://localhost:8080/api/post/${id}`,
+            success: function () {
+                userInfoAllPost();
+            }
+        });
+    }
+
+}
