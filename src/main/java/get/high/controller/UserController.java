@@ -94,17 +94,17 @@ public class UserController {
     @GetMapping("/get-no-friend/{userinfo_id}")
     public ResponseEntity<Iterable<UserInfo>> getNoFriend(@PathVariable("userinfo_id") Long userinfo_id) {
         List<Friendship> friendships = (List<Friendship>) friendshipService.findAll();
-        List<UserInfo> nofriendList = (List<UserInfo>) iUserService.findAll();
-        List<UserInfo> myfriendList = new ArrayList<>();
+        List<UserInfo> noFriendList = (List<UserInfo>) iUserService.findAll();
+        List<UserInfo> myFriendList = new ArrayList<>();
         for (Friendship friendship : friendships) {
             if (friendship.getFromUser().getId() == userinfo_id) {
-                myfriendList.add(friendship.getToUser());
+                myFriendList.add(friendship.getToUser());
             } else if (friendship.getToUser().getId() == userinfo_id) {
-                myfriendList.add(friendship.getFromUser());
+                myFriendList.add(friendship.getFromUser());
             }
         }
-        nofriendList.removeAll(myfriendList);
-        nofriendList.remove(iUserService.findById(userinfo_id).get());
-        return new ResponseEntity<>(nofriendList, HttpStatus.OK);
+        noFriendList.removeAll(myFriendList);
+        noFriendList.remove(iUserService.findById(userinfo_id).get());
+        return new ResponseEntity<>(noFriendList, HttpStatus.OK);
     }
 }
