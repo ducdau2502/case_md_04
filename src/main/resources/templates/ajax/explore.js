@@ -38,7 +38,6 @@ function getMyFriends() {
     });
 }
 
-
 function displayAllUser(userInfo) {
     return `<div class="sl_find_frns_user">
                                 <div class="sl_find_frns_user_cover"> 
@@ -182,6 +181,5 @@ function searchUser() {
     });
     event.preventDefault();
 }
-
 
 window.onload = getFriends

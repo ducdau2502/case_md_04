@@ -187,7 +187,6 @@ function findAllPostByUser(post) {
     return content;
 }
 
-
 function showComments(id) {
     $.ajax({
         type: "GET",
