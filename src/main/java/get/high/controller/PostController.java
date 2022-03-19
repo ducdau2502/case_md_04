@@ -73,10 +73,11 @@ public class PostController {
 
     @GetMapping("/my-time-line/{user_id}")
     public ResponseEntity<Iterable<Post>> myProfile(@PathVariable("user_id") long user_id) {
-        Iterable<Post> posts = postService.findAllByUserInfo_Id(user_id);
+        List<Post> posts = (List<Post>) postService.findAllByUserInfo_Id(user_id);
         if (!posts.iterator().hasNext()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+        posts.sort((o1, o2) -> (int) (o2.getId() - o1.getId()));
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
@@ -84,13 +85,14 @@ public class PostController {
     @GetMapping("/{from_user_id}/{to_user_id}")
     public ResponseEntity<Iterable<Post>> profile(@PathVariable("from_user_id") long from_user_id,
                                                   @PathVariable("to_user_id") long to_user_id) {
-        Iterable<Post> posts;
+        List<Post> posts;
         Optional<Friendship> friendshipOptional = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(from_user_id, to_user_id);
         if (friendshipOptional.isPresent() && friendshipOptional.get().getStatus() == 1) {
-            posts = postService.findAllByUserInfo_Id(to_user_id);
+            posts = (List<Post>) postService.findAllByUserInfo_Id(to_user_id);
         } else {
-            posts = postService.findAllByUserInfo_IdAndStatus(to_user_id, 0);
+            posts = (List<Post>) postService.findAllByUserInfo_IdAndStatus(to_user_id, 0);
         }
+        posts.sort((o1, o2) -> (int) (o2.getId() - o1.getId()));
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 

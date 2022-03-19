@@ -261,7 +261,7 @@
 
                        <!-- browse apps  -->
                        <a href="#" class="opts_icon uk-visible@s" uk-tooltip="title: Create ; pos: bottom ;offset:7">
-                           <img src="../static/assets/images/icons/apps.svg" alt="">
+                           <img src="../static/assets/images/icons/apps.png" alt="">
                        </a>
 
                        <!-- browse apps dropdown -->
@@ -313,7 +313,7 @@
 
                        <!-- Message  notificiation dropdown -->
                        <a href="#" class="opts_icon" uk-tooltip="title: Messages ; pos: bottom ;offset:7">
-                           <img src="../static/assets/images/icons/chat.svg" alt="">
+                           <img src="../static/assets/images/icons/chat.png" alt="">
                        </a>
 
                        <!-- Message  notificiation dropdown -->
@@ -357,7 +357,7 @@
 
                        <!-- notificiation icon  -->
                        <a href="#" class="opts_icon" uk-tooltip="title: Notifications ; pos: bottom ;offset:7">
-                           <img src="../static/assets/images/icons/bell.svg" alt="">
+                           <img src="../static/assets/images/icons/bell.png" alt="">
                        </a>
 
 
@@ -396,7 +396,7 @@
 
 
                        <!-- profile -image -->
-                       <a class="opts_account" href="#"> <img src="../static/assets/images/avatars/avatar-2.jpg" alt=""></a>
+                       <a class="opts_account" href="#"> <img src="../static/assets/images/avatars/avatar-2.png" alt=""></a>
 
                        <!-- profile dropdown-->
                        <div uk-dropdown="mode:click ; animation: uk-animation-slide-bottom-small"
@@ -404,7 +404,7 @@
 
                            <!-- User Name / Avatar -->
                            <!-- User Name / Avatar -->
-                           <a href="mytimeline.html">
+                           <a href="my-timeline.html">
 
                                <div class="dropdown-user-details">
                                    <div class="dropdown-user-name"> My Profile </div>
@@ -414,12 +414,15 @@
 
                            <ul class="dropdown-user-menu">
                                <li>
-                                   <a href="#" id="night-mode" class="btn-night-mode">
-                                       <i class="fas fa-moon"></i> Night mode
-                                       <span class="btn-night-mode-switch">
-                                           <span class="uk-switch-button"></span>
-                                       </span>
+                                   <a onclick="displayFormCreate()" class="button primary small circle uk-visible@s"> <i class="uil-plus"> </i> Add Avatar
                                    </a>
+                                   <form hidden id="form">
+                                       <div class="mb-3 mt-3">
+                                           <label for="avatarFile" class="form-label">Avatar file:</label>
+                                           <input type="file" class="form-control" id="avatarFile">
+                                       </div>
+                                       <button type="submit" id="form-button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                                   </form>
                                </li>
                                </li>
                                <li><a onclick="signOut()"> <i class="fas fa-sign-out-alt"></i>Log Out</a>
@@ -541,7 +544,7 @@
 
                 <a href="#">
                     <div class="contact-list">
-                        <div class="contact-list-media"> <img src="../static/assets/images/avatars/avatar-2.jpg" alt="">
+                        <div class="contact-list-media"> <img src="../static/assets/images/avatars/avatar-2.png" alt="">
                             <span class="online-dot"></span> </div>
                         <h5> Dennis Han</h5>
                     </div>
@@ -572,7 +575,7 @@
                 </a>
                 <a href="#">
                     <div class="contact-list">
-                        <div class="contact-list-media"> <img src="../static/assets/images/avatars/avatar-2.jpg" alt="">
+                        <div class="contact-list-media"> <img src="../static/assets/images/avatars/avatar-2.png" alt="">
                             <span class="online-dot"></span> </div>
                         <h5> Dennis Han</h5>
                     </div>
@@ -600,7 +603,7 @@
                 </a>
                 <a href="#">
                     <div class="contact-list">
-                        <div class="contact-list-media"> <img src="../static/assets/images/avatars/avatar-2.jpg" alt="">
+                        <div class="contact-list-media"> <img src="../static/assets/images/avatars/avatar-2.png" alt="">
                             <span class="online-dot"></span> </div>
                         <h5> Dennis Han</h5>
                     </div>
