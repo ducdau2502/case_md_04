@@ -115,7 +115,7 @@ function userInfoAllPost() {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        url: `http://localhost:8080/api/post/${user_id}`,
+        url: `http://localhost:8080/api/post/my-time-line/${user_id}`,
         success: function (data) {
             let content = "";
             if (data !== undefined) {
@@ -353,15 +353,15 @@ function createPost() {
 
 }
 
-function editPost(id) {
+function editPost(post_id) {
     $.ajax({
-        type: 'GET',
+        type: 'get',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        url: `http://localhost:8080/api/post/${id}`,
+        url: `http://localhost:8080/api/post/${post_id}`,
         success: function (data) {
             $('#contentPost').val(data.content);
             $('#statusPost').val(data.status);
@@ -398,7 +398,7 @@ function updatePost() {
         },
         url: `http://localhost:8080/api/post/${index}`,
         success: function () {
-            showAllPost();
+            userInfoAllPost();
             document.getElementById("formCreatePost").reset();
         }
 
@@ -422,4 +422,37 @@ function deletePost(id) {
         });
     }
 
+}
+
+function displayFormCreate() {
+    document.getElementById("form").reset();
+    document.getElementById("form").hidden = false;
+    document.getElementById("form-button").onclick = function () {
+        addAvatar();
+    }
+}
+
+function addAvatar() {
+    let data = new FormData();
+
+    data.append("file", $('#avatarFile')[0].files[0]);
+
+    $.ajax({
+        type: "POST",
+        data: data,
+        processData: false,
+        contentType: false,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/user/${user_id}`,
+        success: function () {
+            profileDetail();
+            document.getElementById("form").hidden = true;
+            document.getElementById("formCreatePost").reset();
+        }
+
+    });
+    event.preventDefault();
 }

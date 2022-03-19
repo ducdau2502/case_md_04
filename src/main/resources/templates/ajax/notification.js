@@ -226,6 +226,13 @@ function checkAcceptGroupNotification(member_id,group_id) {
     })
 }
 
+function signOut() {
+    localStorage.setItem('token', "");
+    localStorage.setItem('user', "");
+    localStorage.setItem('group_id', "");
+    window.location.href = "form-login.html";
+}
+
 
 setTimeout(notificationLikeComment, 1000)
 setTimeout(notificationLikePost, 1000)

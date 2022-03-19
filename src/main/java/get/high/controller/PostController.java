@@ -64,14 +64,14 @@ public class PostController {
         return new ResponseEntity<>(posts, HttpStatus.OK);
     }
 
-    // detail post
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Post> detail(@PathVariable("id") Long id) {
-//        Optional<Post> post = postService.findById(id);
-//        return post.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-//    }
+//     detail post
+    @GetMapping("/{id}")
+    public ResponseEntity<Post> detail(@PathVariable("id") Long id) {
+        Optional<Post> post = postService.findById(id);
+        return post.map(value -> new ResponseEntity<>(value, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
 
-    @GetMapping("/{user_id}")
+    @GetMapping("/my-time-line/{user_id}")
     public ResponseEntity<Iterable<Post>> myProfile(@PathVariable("user_id") long user_id) {
         Iterable<Post> posts = postService.findAllByUserInfo_Id(user_id);
         if (!posts.iterator().hasNext()) {
@@ -153,7 +153,7 @@ public class PostController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         postService.remove(id);
-        return new ResponseEntity<>(post.get(), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     //New-feeds

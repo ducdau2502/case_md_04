@@ -412,15 +412,18 @@
 
                             <ul class="dropdown-user-menu">
                                 <li>
-                                    <a href="#" id="night-mode" class="btn-night-mode">
-                                        <i class="fas fa-moon"></i> Night mode
-                                        <span class="btn-night-mode-switch">
-                                           <span class="uk-switch-button"></span>
-                                       </span>
+                                    <a onclick="displayFormCreate()" class="button primary small circle uk-visible@s"> <i class="uil-plus"> </i> Create new
                                     </a>
+                                    <form hidden id="form">
+                                        <div class="mb-3 mt-3">
+                                            <label for="avatarFile" class="form-label">Avatar file:</label>
+                                            <input type="file" class="form-control" id="avatarFile">
+                                        </div>
+                                        <button type="submit" id="form-button" class="btn btn-primary" data-bs-dismiss="modal">Submit</button>
+                                    </form>
                                 </li>
                                 </li>
-                                <li><a href="form-login.html"> <i class="fas fa-sign-out-alt"></i>Log Out</a>
+                                <li><a onclick="signOut()"> <i class="fas fa-sign-out-alt"></i>Log Out</a>
                                 </li>
                             </ul>
                         </div>
