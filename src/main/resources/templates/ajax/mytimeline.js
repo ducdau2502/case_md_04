@@ -1,6 +1,6 @@
 let user_id = JSON.parse(localStorage.getItem('user')).id;
-let timeline_id = localStorage.getItem('timeLineId');
 window.onload = profileDetail;
+let index = 0;
 
 function profileDetail() {
     $.ajax({
@@ -10,7 +10,7 @@ function profileDetail() {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        url: `http://localhost:8080/api/user/${timeline_id}`,
+        url: `http://localhost:8080/api/user/${user_id}`,
         success: function (data) {
             let content1 = userInfo(data);
             let content2 = userInfoDetail(data);
@@ -115,7 +115,7 @@ function userInfoAllPost() {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        url: `http://localhost:8080/api/post/${user_id}/${timeline_id}`,
+        url: `http://localhost:8080/api/post/my-time-line/${user_id}`,
         success: function (data) {
             let content = "";
             if (data !== undefined) {
@@ -186,7 +186,6 @@ function findAllPostByUser(post) {
     countlikePost(post.id);
     return content;
 }
-
 
 function showComments(id) {
     $.ajax({
@@ -345,7 +344,7 @@ function createPost() {
         },
         url: `http://localhost:8080/api/post/${user_id}`,
         success: function () {
-            showAllPost();
+            userInfoAllPost();
             document.getElementById("formCreatePost").reset();
         }
 
@@ -354,17 +353,15 @@ function createPost() {
 
 }
 
-let index = 0;
-
-function editPost(id) {
+function editPost(post_id) {
     $.ajax({
-        type: 'GET',
+        type: 'get',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + localStorage.getItem('token')
         },
-        url: `http://localhost:8080/api/post/${id}`,
+        url: `http://localhost:8080/api/post/${post_id}`,
         success: function (data) {
             $('#contentPost').val(data.content);
             $('#statusPost').val(data.status);
@@ -401,7 +398,58 @@ function updatePost() {
         },
         url: `http://localhost:8080/api/post/${index}`,
         success: function () {
-            showAllPost();
+            userInfoAllPost();
+            document.getElementById("formCreatePost").reset();
+        }
+
+    });
+    event.preventDefault();
+}
+
+function deletePost(id) {
+    if (confirm('Are you sure you want to delete ?') === true) {
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            },
+            type: "delete",
+            url: `http://localhost:8080/api/post/${id}`,
+            success: function () {
+                userInfoAllPost();
+            }
+        });
+    }
+
+}
+
+function displayFormCreate() {
+    document.getElementById("form").reset();
+    document.getElementById("form").hidden = false;
+    document.getElementById("form-button").onclick = function () {
+        addAvatar();
+    }
+}
+
+function addAvatar() {
+    let data = new FormData();
+
+    data.append("file", $('#avatarFile')[0].files[0]);
+
+    $.ajax({
+        type: "POST",
+        data: data,
+        processData: false,
+        contentType: false,
+        headers: {
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+        url: `http://localhost:8080/api/user/${user_id}`,
+        success: function () {
+            profileDetail();
+            document.getElementById("form").hidden = true;
             document.getElementById("formCreatePost").reset();
         }
 

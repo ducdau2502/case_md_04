@@ -95,6 +95,11 @@ public class FriendshipController {
             friendshipService.save(optionalFriendship1.get());
         }
 
+        if (!optionalFriendship.isPresent() && !optionalFriendship1.isPresent()) {
+            Friendship friendship = new Friendship(fromUser, toUser, 2);
+            friendshipService.save(friendship);
+        }
+
         return new ResponseEntity<>(HttpStatus.OK);
     }
 

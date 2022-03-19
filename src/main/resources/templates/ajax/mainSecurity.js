@@ -19,6 +19,9 @@ function login() {
             localStorage.setItem("token", data.jwt)
             localStorage.setItem("user", JSON.stringify(data))
                 window.location.href = "feeds.html"
+        },
+        error: function() {
+            $('#notification-bar').text('Login failed. Please try again...!!!');
         }
     });
     event.preventDefault();
@@ -54,6 +57,9 @@ function regis() {
         success: function (data) {
             console.log(data)
             window.location.href = "form-login.html"
+        },
+        error: function() {
+            $('#notification-bar').text('\n' + 'Registration failed. Please try again...!!!');
         }
     });
     event.preventDefault();

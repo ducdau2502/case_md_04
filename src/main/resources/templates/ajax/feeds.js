@@ -54,7 +54,6 @@ function showAllPost() {
     })
 }
 
-
 function displayPost(post) {
     let content = "";
     content += `<div class="post">
