@@ -124,10 +124,10 @@ public class FriendshipController {
         Optional<Friendship> friendshipOptional = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(from_user_id, to_user_id);
         Optional<Friendship> friendshipOptional1 = friendshipService.findFriendshipByFromUser_IdAndToUser_Id(to_user_id, from_user_id);
         if (friendshipOptional.isPresent() && friendshipOptional.get().getStatus() == 1) {
-            return new ResponseEntity<>(1, HttpStatus.OK);
+            return new ResponseEntity<>(friendshipOptional.get().getToUser(), HttpStatus.OK);
         } else if (friendshipOptional1.isPresent() && friendshipOptional1.get().getStatus() == 1) {
-            return new ResponseEntity<>(friendshipOptional1.get(), HttpStatus.OK);
+            return new ResponseEntity<>(friendshipOptional1.get().getFromUser(), HttpStatus.OK);
         }
-        return new ResponseEntity<>(3, HttpStatus.OK);
+        return new ResponseEntity<>(1, HttpStatus.OK);
     }
 }
