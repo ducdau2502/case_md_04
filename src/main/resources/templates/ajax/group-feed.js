@@ -119,7 +119,7 @@ function displayPost(post) {
                                     <div id="commentList${post.id}"></div>
                                     <div class="post-add-comment">
                                         <div class="post-add-comment-text-area">
-                                            <input type="text" id="commentPost" placeholder="Write your comment...">
+                                            <input type="text" id="createComment${post.id}" placeholder="Write your comment...">
                                             <button type="button" onclick="createCommentPost(${post.id},user_id)" class="button primary px-6"> Comment </button>
                                         </div>
 
@@ -342,7 +342,7 @@ function updatePost() {
 }
 
 function createCommentPost(post_id) {
-    let content = $('#commentPost').val();
+    let content = $(`#createComment${post_id}`).val();
     let newComment = {
         content: content,
         userInfo: {

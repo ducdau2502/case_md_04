@@ -305,7 +305,6 @@ function updatePost() {
 }
 
 function createCommentPost(post_id) {
-    console.log(`#createComment${post_id}`)
     let content = $(`#createComment${post_id}`).val();
     let newComment = {
         content: content,
