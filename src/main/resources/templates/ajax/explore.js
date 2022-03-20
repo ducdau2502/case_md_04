@@ -120,7 +120,7 @@ function displayAllUserFriend(userInfo) {
 
 function openTimeline(userTimelineId) {
     localStorage.setItem("timeLineId", userTimelineId);
-    window.location.href = "my-timeline.html";
+    window.location.href = "timeline.html";
 
 }
 

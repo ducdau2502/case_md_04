@@ -79,7 +79,7 @@ function displayPost(post) {
     content += `<div class="post">
                                 <div class="post-heading">
                                     <div class="post-avature">
-                                        <img src="../static/assets/images/avatars/avatar-6.jpg" alt="">
+                                        <img src="${post.userInfo.avatarUrl}" alt="">
                                     </div>
                                     <div class="post-title">
                                         <h4> ${post.userInfo.fullName} </h4>
